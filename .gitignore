@@ -1,0 +1,56 @@
+# Data (never push)
+data/
+
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Packaging / build
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Test / lint caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Env / secrets
+.env
+.env.*
+
+# ML artifacts (large, regenerable)
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.ckpt
+*.npy
+*.npz
+*.parquet
+wandb/
+runs/
+lightning_logs/
+mlruns/
+checkpoints/
+cache/
+outputs/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
