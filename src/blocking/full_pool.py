@@ -16,6 +16,38 @@ DIM = 384
 MODEL = 'intfloat/multilingual-e5-small'
 
 def cslug(c): return re.sub(r'[^A-Za-z0-9]+', '_', c)
+def ckey(c):
+    """THE canonical country key (used by encode, open_country, search, _dense_scores): whitespace-collapsed + casefolded.
+    Punctuation is significant: 'US' and 'U.S.' are DIFFERENT countries (no alias rule); 'India'/'india '/'INDIA' are one."""
+    return re.sub(r'\s+', ' ', str(c)).strip().casefold()
+MANIFEST = 'countries.json'   # ckey -> file slug, written by encode() in each outdir (train dir predates it: legacy fallback)
+
+def _assign_slugs(labels):
+    """labels: raw country labels -> {ckey: slug}. Slug = cslug(most frequent raw label); a hash suffix disambiguates
+    keys whose slugs collide (e.g. 'New-York' vs 'New York'). Slugs are asserted unique."""
+    import hashlib
+    by = {}
+    for l in pd.Series(list(labels)).value_counts().index: by.setdefault(ckey(l), l)   # most frequent raw label per key
+    out, used = {}, {}
+    for k in sorted(by):
+        sl = cslug(by[k]) or 'x'
+        if sl.casefold() in used: sl = f'{sl}_{hashlib.md5(k.encode()).hexdigest()[:8]}'
+        assert sl.casefold() not in used, f'slug collision {sl}'
+        used[sl.casefold()] = k; out[k] = sl
+    assert len(set(v.casefold() for v in out.values())) == len(out)
+    return out
+
+def _slug_for(c, D):
+    """file slug for country label c in artifact dir D, or None if absent. Manifest first; legacy (no manifest, train dir)
+    falls back to exact then case-insensitive slug match on pos_*.npy files."""
+    k = ckey(c); mf = D + MANIFEST
+    if os.path.exists(mf): return json.load(open(mf)).get(k)
+    if os.path.exists(D + f'pos_{cslug(str(c))}.npy'): return cslug(str(c))
+    want = cslug(k).casefold()
+    for f in (os.listdir(D) if os.path.isdir(D) else []):
+        if f.startswith('pos_') and f.endswith('.npy') and f[4:-4].casefold() == want: return f[4:-4]
+    return None
+
 def rss(): return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1e6
 
 def load_raw_cols():
@@ -25,24 +57,58 @@ def load_raw_cols():
     t = pa.concat_tables(ts)
     return t
 
-def encode(chunk=100_000, limit=None, bs=512, max_len=64):
-    import torch
-    from sentence_transformers import SentenceTransformer
+def _ids_hash(ids):
+    import hashlib
+    return hashlib.md5('\x00'.join(map(str, ids)).encode()).hexdigest()
+
+def encode(chunk=100_000, limit=None, bs=512, max_len=64, pool=None, raw=None, encoder=None, outdir=None):
+    """pool: DataFrame with id,country (default: train pool_norm); raw: pyarrow Table with entity_id,business_name,
+    business_address in the same row order (default: source2+source3). Pass the test S2/S3 pool+raw for inference:
+    then `outdir` is REQUIRED and must not be the train dir. Progress files carry n + hash of the pool ids and refuse to
+    resume on mismatch. encoder: optional callable(list[str]) -> (n,DIM) array, replaces e5 (tests / CPU)."""
+    if pool is not None or raw is not None:
+        assert pool is not None and raw is not None, 'pass pool and raw together'
+        assert outdir, 'encode(pool=...) requires an explicit outdir (never the train embeddings dir)'
+    D = outdir or globals()['D']
+    assert pool is None or os.path.abspath(D) != os.path.abspath(globals()['D']), 'refusing to write a custom pool into the train dir'
+    D = D if D.endswith('/') else D + '/'
     os.makedirs(D, exist_ok=True)
-    pool = norm.load_pool(); raw = load_raw_cols()
+    if pool is None: pool = norm.load_pool()
+    if raw is None: raw = load_raw_cols()
+    if encoder is None:
+        import torch
+        from sentence_transformers import SentenceTransformer
+        m = SentenceTransformer(MODEL, device='cuda', model_kwargs={'torch_dtype': 'float16'}); m.max_seq_length = max_len
+        encoder = lambda t: m.encode(t, batch_size=bs, normalize_embeddings=True, convert_to_numpy=True, show_progress_bar=False)
+
     assert raw.num_rows == len(pool) and (raw.column('entity_id').to_numpy(zero_copy_only=False) == pool.id.values).all()
-    countries = sorted(pool.country.unique())   # derived from data
-    m = SentenceTransformer(MODEL, device='cuda', model_kwargs={'torch_dtype': 'float16'}); m.max_seq_length = max_len
+    pk = pool.country.map(ckey).values                       # one canonical key everywhere
+    slugs = _assign_slugs(pool.country.values)
+    mf = D + MANIFEST
+    if os.path.exists(mf):
+        old = json.load(open(mf)); assert all(slugs[k] == v for k, v in old.items() if k in slugs), 'country->slug manifest conflict in outdir'
+        slugs = {**old, **slugs}; assert len({v.casefold() for v in slugs.values()}) == len(slugs), 'slug collision with existing manifest'
+    json.dump(slugs, open(mf + '.tmp', 'w')); os.replace(mf + '.tmp', mf)
     t0 = time.time(); done_total = 0; total = len(pool) if limit is None else min(limit, len(pool))
-    for c in countries:
-        pos = np.flatnonzero(pool.country.values == c).astype(np.int32)
+    for k in sorted(slugs):
+        pos = np.flatnonzero(pk == k).astype(np.int32)
+        if len(pos) == 0: continue
         if limit: pos = pos[:limit]
-        np.save(D + f'pos_{cslug(c)}.npy', pos)
-        pf = D + f'progress_{cslug(c)}.json'
-        done = json.load(open(pf))['done'] if os.path.exists(pf) else 0
-        fn = D + f'emb_{cslug(c)}.f16'
+        sl = slugs[k]; h = _ids_hash(pool.id.values[pos])
+        pf = D + f'progress_{sl}.json'; fn = D + f'emb_{sl}.f16'; pn = D + f'pos_{sl}.npy'
+        done = 0
+        if os.path.exists(pf):
+            pr = json.load(open(pf)); done = pr['done']
+            if 'ids_hash' in pr:
+                assert pr['ids_hash'] == h and pr['n'] == len(pos), f'[{k}] progress file belongs to a different pool: refusing to resume (delete {pf} and its emb/pos to redo)'
+            else:   # legacy progress (no hash): only trusted for the default train pool in the train dir
+                assert os.path.abspath(D) == os.path.abspath(globals()['D']), f'[{k}] legacy progress file in a non-train dir'
+                assert os.path.exists(pn) and (np.load(pn) == pos).all(), f'[{k}] legacy progress but pos mismatch'
+        if os.path.exists(pn) and done: assert (np.load(pn) == pos).all(), f'[{k}] existing pos file differs from this pool'
+        np.save(pn, pos)
+        if os.path.exists(fn): assert os.path.getsize(fn) == len(pos) * DIM * 2, f'[{k}] existing emb file has wrong size'
         mm = np.memmap(fn, dtype=np.float16, mode='r+' if os.path.exists(fn) else 'w+', shape=(len(pos), DIM))
-        print(f'[{c}] rows {len(pos)} resume at {done}', flush=True)
+        print(f'[{k}] rows {len(pos)} resume at {done}', flush=True)
         for s in range(done, len(pos), chunk):
             p = pos[s:s + chunk]
             sub = raw.take(p)
@@ -50,24 +116,35 @@ def encode(chunk=100_000, limit=None, bs=512, max_len=64):
             ad = pd.Series(sub.column('business_address').to_numpy(zero_copy_only=False))
             txt = np.asarray(['passage: ' + t for t in norm.embed_text(nm, ad)], dtype=object)
             order = np.argsort([len(t) for t in txt], kind='stable')
-            e = m.encode(list(txt[order]), batch_size=bs, normalize_embeddings=True, convert_to_numpy=True, show_progress_bar=False)
+            e = encoder(list(txt[order]))
             out = np.empty((len(p), DIM), dtype=np.float16); out[order] = e.astype(np.float16)
             assert np.isfinite(out).all()
             mm[s:s + len(p)] = out; mm.flush()
-            json.dump({'done': s + len(p)}, open(pf + '.tmp', 'w')); os.replace(pf + '.tmp', pf)
+            json.dump({'done': s + len(p), 'n': len(pos), 'ids_hash': h}, open(pf + '.tmp', 'w')); os.replace(pf + '.tmp', pf)
             done_total += len(p); el = time.time() - t0
-            print(f'[{c}] {s + len(p)}/{len(pos)}  elapsed {el/60:.1f}m  rate {done_total/el:.0f}/s  ETA {(total-done_total)/(done_total/el)/60:.1f}m  rss {rss():.1f}GB', flush=True)
+            print(f'[{k}] {s + len(p)}/{len(pos)}  elapsed {el/60:.1f}m  rate {done_total/el:.0f}/s  ETA {(total-done_total)/(done_total/el)/60:.1f}m  rss {rss():.1f}GB', flush=True)
         del mm
     print('ENCODE DONE', time.time() - t0, flush=True)
 
 
 # ----------------------------------------------------------------------------- search
 K = 100          # stored dense depth; recall@50 is the first 50 columns
-def open_country(c):
-    pos = np.load(D + f'pos_{cslug(c)}.npy')
-    mm = np.memmap(D + f'emb_{cslug(c)}.f16', dtype=np.float16, mode='r', shape=(len(pos), DIM))
-    assert json.load(open(D + f'progress_{cslug(c)}.json'))['done'] == len(pos), f'{c} encode incomplete'
+def open_country(c, outdir=None, missing_ok=False):
+    """returns (pos, memmap); (None, None) if country never encoded and missing_ok (else FileNotFoundError).
+    Routing is by ckey(c) via the outdir manifest (legacy train dir: slug match)."""
+    D = outdir or globals()['D']
+    sl = _slug_for(c, D)
+    if sl is None or not (os.path.exists(D + f'pos_{sl}.npy') and os.path.exists(D + f'emb_{sl}.f16')):
+        if missing_ok: return None, None
+        raise FileNotFoundError(f'no encoded country {c!r} in {D}')
+    pos = np.load(D + f'pos_{sl}.npy')
+    mm = np.memmap(D + f'emb_{sl}.f16', dtype=np.float16, mode='r', shape=(len(pos), DIM))
+    assert json.load(open(D + f'progress_{sl}.json'))['done'] == len(pos), f'{c} encode incomplete'
     return pos, mm
+
+def _dev():
+    import torch
+    return 'cuda' if torch.cuda.is_available() else 'cpu'
 
 def topk_stream(Q, mm, k=K, pchunk=200_000, qchunk=1500):
     rs, vs = [], []
@@ -77,16 +154,18 @@ def topk_stream(Q, mm, k=K, pchunk=200_000, qchunk=1500):
 
 def _topk_stream(Q, mm, k=K, pchunk=200_000):
     """exact inner-product top-k of Q (nq,384 fp16 torch cuda) over memmap rows, streamed in pchunk blocks.
-    Scores cast to fp32 before topk (fp16 ties blur the boundary). returns (rows int64, scores float32) numpy."""
+    Scores cast to fp32 before topk (fp16 ties blur the boundary). returns (rows int64, scores float32) numpy; fewer than k columns if the pool has fewer than k rows (callers pad)."""
     import torch
+    if Q.device.type == 'cpu': Q = Q.float()
     bv = bi = None
     for s in range(0, mm.shape[0], pchunk):
-        blk = torch.from_numpy(np.ascontiguousarray(mm[s:s + pchunk])).cuda()
+        blk = torch.from_numpy(np.ascontiguousarray(mm[s:s + pchunk])).to(Q.device)
+        if Q.device.type == 'cpu': blk = blk.float()
         sc = (Q @ blk.T).float()
         v, i = sc.topk(min(k, blk.shape[0]), dim=1); i = i + s
         if bv is None: bv, bi = v, i
         else:
-            v2, j = torch.cat([bv, v], 1).topk(k, dim=1); bi = torch.cat([bi, i], 1).gather(1, j); bv = v2
+            v2, j = torch.cat([bv, v], 1).topk(min(k, bv.shape[1] + v.shape[1]), dim=1); bi = torch.cat([bi, i], 1).gather(1, j); bv = v2
         del sc, blk
     return bi.cpu().numpy(), bv.cpu().numpy()
 
@@ -95,6 +174,48 @@ def sample_val_anchors(n, seed=11):
     ns = int(round(n * (~v.has_match).mean()))
     pick = pd.concat([v[v.has_match].sample(n - ns, random_state=seed), v[~v.has_match].sample(ns, random_state=seed)])
     return pick.sample(frac=1, random_state=seed).reset_index(drop=True)
+
+def dense_search(Q, an_country, seeds_exp=3, nb=11, outdir=None, k=K):
+    """THE country-routing point for candidate search. Q (n,DIM) fp16 query embeddings, an_country raw labels.
+    Anchors are grouped by ckey(country) and searched only inside that country's memmap (open_country, same key as encode).
+    Returns cpos (n,k) int32 pool positions, csc (n,k) float32, epos (n, seeds_exp*(nb-1)) int32, padded with -1 / -inf.
+    Absent country -> all -1 (no crash, never a candidate from another country). Pools smaller than k are padded."""
+    import torch
+    dev = _dev(); n = len(an_country)
+    cpos = np.full((n, k), -1, np.int32); csc = np.full((n, k), -np.inf, np.float32)
+    epos = np.full((n, seeds_exp * (nb - 1)), -1, np.int32)   # pool-side expansion: neighbours of top seeds
+    ak = pd.Series(np.asarray(an_country, dtype=object)).map(ckey).values
+    for c in sorted(set(ak)):
+        pos, mm = open_country(c, outdir=outdir, missing_ok=True); ai = np.flatnonzero(ak == c)
+        if pos is None:   # country absent from pool (e.g. France at test time): empty candidate set, no crash
+            print(f'WARNING [{c}] no pool records: {len(ai)} anchors get empty candidates', flush=True); continue
+        kk = min(k, len(pos)); se = min(seeds_exp, kk); nk = min(nb, len(pos))   # clamp to pool size, pad below
+        r, v = topk_stream(torch.from_numpy(Q[ai]).to(dev), mm, k=kk)
+        assert r.shape == (len(ai), kk)
+        cpos[ai, :kk] = pos[r]; csc[ai, :kk] = v
+        # expansion: seeds = top-s dense candidates; neighbours = their top-nb in pool (minus self)
+        seed_rows = r[:, :se].ravel()
+        S = torch.from_numpy(np.ascontiguousarray(mm[np.sort(seed_rows)])).to(dev)
+        srt = np.argsort(seed_rows); inv = np.empty_like(srt); inv[srt] = np.arange(len(srt))
+        nr, nv = topk_stream(S[torch.from_numpy(inv).to(dev)], mm, k=nk)
+        nr = nr.reshape(len(ai), se, nk); sr = r[:, :se, None]
+        # drop the seed itself (may not be at rank 0 if exact dup embeddings): mask, keep first nb-1 others
+        out = np.full((len(ai), seeds_exp, nb - 1), -1, np.int64)
+        keep = nr != sr
+        for a_ in range(len(ai)):
+            for s_ in range(se):
+                x = nr[a_, s_][keep[a_, s_]][:nb - 1]; out[a_, s_, :len(x)] = x
+        e = out.reshape(len(ai), -1); epos[ai] = np.where(e >= 0, pos[np.clip(e, 0, None)], -1)
+        print(f'[{c}] searched {len(ai)} anchors vs {len(pos)} pool', flush=True)
+    return cpos, csc, epos
+
+def dense_table(cpos, csc, k=K):
+    """long (a, p, score, rank) table of the REAL dense candidates only: drops -1 padding / non-finite scores."""
+    nA = len(cpos)
+    d = pd.DataFrame({'a': np.repeat(np.arange(nA), cpos.shape[1]), 'p': cpos.ravel().astype(np.int64), 'score': csc.ravel(), 'rank': np.tile(np.arange(cpos.shape[1]), nA)})
+    d = d[(d.p >= 0) & np.isfinite(d.score)]
+    assert not d.duplicated(['a', 'p']).any(), 'repeated (a,p) dense candidates'
+    return d
 
 def search(n=5000, seed=11, seeds_exp=3, nb=11):
     import torch
@@ -108,27 +229,10 @@ def search(n=5000, seed=11, seeds_exp=3, nb=11):
     Q = m.encode(['query: ' + t for t in an.text], batch_size=512, normalize_embeddings=True, convert_to_numpy=True).astype(np.float16)
     assert np.isfinite(Q).all(); del m; torch.cuda.empty_cache()
     an.drop(columns='text').to_parquet(D + 'val_anchors.parquet'); np.save(D + 'val_Q.npy', Q)
-    cpos = np.full((len(an), K), -1, np.int32); csc = np.full((len(an), K), -np.inf, np.float32)
-    epos = np.full((len(an), seeds_exp * (nb - 1)), -1, np.int32)  # pool-side expansion: neighbours of top seeds
-    for c in sorted(an.country.unique()):
-        pos, mm = open_country(c); ai = np.flatnonzero(an.country.values == c)
-        r, v = topk_stream(torch.from_numpy(Q[ai]).cuda(), mm)
-        cpos[ai] = pos[r]; csc[ai] = v
-        # expansion: seeds = top-s dense candidates; neighbours = their top-nb in pool (minus self)
-        seed_rows = r[:, :seeds_exp].ravel()
-        S = torch.from_numpy(np.ascontiguousarray(mm[np.sort(seed_rows)])).cuda()
-        srt = np.argsort(seed_rows); inv = np.empty_like(srt); inv[srt] = np.arange(len(srt))
-        nr, nv = topk_stream(S[torch.from_numpy(inv).cuda()], mm, k=nb)
-        nr = nr.reshape(len(ai), seeds_exp, nb); sr = r[:, :seeds_exp, None]
-        # drop the seed itself (may not be at rank 0 if exact dup embeddings): mask, keep first nb-1 others
-        out = np.full((len(ai), seeds_exp, nb - 1), -1, np.int64)
-        keep = nr != sr
-        for a_ in range(len(ai)):
-            for s_ in range(seeds_exp):
-                x = nr[a_, s_][keep[a_, s_]][:nb - 1]; out[a_, s_, :len(x)] = x
-        e = out.reshape(len(ai), -1); epos[ai] = np.where(e >= 0, pos[np.clip(e, 0, None)], -1)
-        print(f'[{c}] searched {len(ai)} anchors vs {len(pos)} pool  {time.time()-t0:.0f}s', flush=True)
-    assert (cpos >= 0).all() and np.isfinite(csc).all()
+    cpos, csc, epos = dense_search(Q, an.country.values, seeds_exp=seeds_exp, nb=nb)
+    routed = cpos[:, 0] >= 0   # anchors whose country is absent from the pool keep empty (-1) candidates
+    assert ((cpos >= 0) == np.isfinite(csc)).all()   # padding (-1) <=> -inf score
+    print(f'anchors with empty candidate set (country not in pool): {(~routed).sum()}/{len(an)}', flush=True)
     np.savez(D + 'val_dense.npz', cpos=cpos, csc=csc, epos=epos)
     print('SEARCH DONE', time.time() - t0, 'rss', rss(), flush=True)
 
@@ -148,13 +252,18 @@ def lex(cap_addr=3000):
 # ----------------------------------------------------------------------------- report
 def _keys(a, p): return a.astype(np.int64) * (1 << 32) + p.astype(np.int64)
 
-def _dense_scores(a, p, Q, pool_country, an_country, cache):
-    """exact q.e for arbitrary (anchor idx, pool pos) pairs, gathered from the country memmaps (chunked)."""
-    out = np.empty(len(a), np.float32)
-    for c in np.unique(an_country):
-        if c not in cache: cache[c] = open_country(c)
-        pos, mm = cache[c]; sel = np.flatnonzero(an_country[a] == c)
-        rows = np.searchsorted(pos, p[sel]); assert (pos[rows] == p[sel]).all()
+def _dense_scores(a, p, Q, pool_country, an_country, cache, outdir=None):
+    """exact q.e for arbitrary (anchor idx, pool pos) pairs, gathered from the country memmaps (chunked).
+    Pairs whose anchor country is absent from the pool get -1.0 (cosine floor)."""
+    out = np.full(len(a), -1.0, np.float32)
+    ak = pd.Series(np.asarray(an_country, dtype=object)).map(ckey).values
+    for c in np.unique(ak):
+        ck = (outdir, c)
+        if ck not in cache: cache[ck] = open_country(c, outdir=outdir, missing_ok=True)
+        pos, mm = cache[ck]
+        if pos is None: continue
+        sel = np.flatnonzero(ak[a] == c)
+        rows = np.searchsorted(pos, p[sel]); assert (rows < len(pos)).all() and (pos[rows] == p[sel]).all()
         for s in range(0, len(sel), 400_000):
             ss = sel[s:s + 400_000]
             out[ss] = np.einsum('ij,ij->i', Q[a[ss]].astype(np.float32), mm[rows[s:s + 400_000]].astype(np.float32))
@@ -181,7 +290,7 @@ def report(topn=25):
     cache = {}; C = an.country.values
     # candidate tables
     cp, cs = dn['cpos'], dn['csc']
-    D_ = pd.DataFrame({'a': np.repeat(np.arange(nA), K), 'p': cp.ravel().astype(np.int64), 'score': cs.ravel(), 'rank': np.tile(np.arange(K), nA)})
+    D_ = dense_table(cp, cs)   # real candidates only (no -1 padding)
     ep = dn['epos']; E_ = pd.DataFrame({'a': np.repeat(np.arange(nA), ep.shape[1]), 'p': ep.ravel().astype(np.int64)}); E_ = E_[E_.p >= 0].drop_duplicates(['a', 'p'])
     E_['score'] = _dense_scores(E_.a.values, E_.p.values, Q, None, C, cache); E_['votes'] = 0
     lexd = {}
@@ -242,13 +351,13 @@ def report(topn=25):
     import re as _re; m_ = _re.match(r'D(\d+)\+E(\d+)\+L(\d+)\[(\w+)\]', bt)
     bc = build(int(m_[1]), int(m_[2]), int(m_[3]), 'all', m_[4]); szb = breakdown(bc, bt)
     # ---- singletons
-    s = ~an.has_match.values; top1 = cs[:, 0]
+    ok = np.isfinite(cs[:, 0]); s = ~an.has_match.values; top1 = cs[:, 0]
     print('\n=== singleton anchors (must get empty predictions later)')
-    for nm_, mask in [('singletons', s), ('matched', ~s)]:
+    for nm_, mask in [('singletons', s & ok), ('matched', ~s & ok)]:
         print(nm_, 'n', mask.sum(), 'dense top1 cos pctl 5/25/50/75/95:', np.round(np.quantile(top1[mask], [.05, .25, .5, .75, .95]), 4))
     for c in np.unique(C):
-        m1 = s & (C == c); print(f'  {c}: singleton n {m1.sum()} cand@dense50 {sz50[m1].mean():.1f} cand@best {szb[m1].mean():.1f}; top1 median singleton {np.median(top1[m1]):.3f} vs matched {np.median(top1[(~s) & (C == c)]):.3f}')
-    thr = np.quantile(top1[~s], 0.10); print(f'a top1-cos threshold keeping 90% of matched anchors abstains on {(top1[s] < thr).mean():.1%} of singletons (thr {thr:.3f}); note top1 alone is a weak abstain signal, matcher decides')
+        m1 = s & ok & (C == c); print(f'  {c}: singleton n {m1.sum()} cand@dense50 {sz50[m1].mean():.1f} cand@best {szb[m1].mean():.1f}; top1 median singleton {np.median(top1[m1]):.3f} vs matched {np.median(top1[(~s) & ok & (C == c)]):.3f}')
+    thr = np.quantile(top1[~s & ok], 0.10); print(f'a top1-cos threshold keeping 90% of matched anchors abstains on {(top1[s & ok] < thr).mean():.1%} of singletons (thr {thr:.3f}); note top1 alone is a weak abstain signal, matcher decides')
     print('REPORT DONE', time.time() - t0, 'rss', rss())
 
 if __name__ == '__main__':

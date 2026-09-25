@@ -64,7 +64,7 @@ def _check_keys(y_true, y_pred, allow_missing: bool, stacklevel: int = 3) -> Non
                       stacklevel=stacklevel + 1)
 
 
-def _counts(y_true, y_pred, strict: bool = True, allow_missing: bool = False, _sl: int = 3):
+def _counts(y_true, y_pred, strict: bool = True, allow_missing: bool = False, _sl: int = 2):
     if len(y_true) == 0:
         raise ValueError("y_true is empty: metric undefined")
     _check_keys(y_true, y_pred, allow_missing, _sl)
@@ -84,7 +84,7 @@ def _fbeta(tp, fp, fn, beta):
 
 
 def per_anchor_scores(y_true, y_pred, beta: float = BETA, strict: bool = True,
-                      allow_missing: bool = False, _sl: int = 3) -> pd.Series:
+                      allow_missing: bool = False, _sl: int = 2) -> pd.Series:
     ids, tp, fp, fn = _counts(y_true, y_pred, strict, allow_missing, _sl + 1)
     return pd.Series(_fbeta(tp, fp, fn, beta), index=ids)
 

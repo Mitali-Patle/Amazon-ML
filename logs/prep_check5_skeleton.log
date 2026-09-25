@@ -1,0 +1,4 @@
+latin-latin 10120 skeleton any/rare200/rare3000 %: [91.91  8.45 39.72]
+non-latin 851 skeleton any/rare200/rare3000 %: [97.3  0.   0. ]
+target=deva 433 skeleton any/rare200/rare3000 %: [97.92  0.    0.  ]
+target=indic-other 361 skeleton any/rare200/rare3000 %: [96.12  0.    0.  ]

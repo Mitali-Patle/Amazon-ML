@@ -1,0 +1,12 @@
+sample2 10001 {('India', False): 222, ('India', True): 3777, ('US', False): 337, ('US', True): 5665}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9067.24it/s]
+/home/kr95/Projects/Amazon-ML/src/blocking/full_pool.py:102: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:213.)
+  Scores cast to fp32 before topk (fp16 ties blur the boundary). returns (rows int64, scores float32) numpy."""
+[India] 3999 anchors 30s
+[US] 6002 anchors 60s
+[lex addrnum2] 359/anchor 75s
+[lex addrnum0] 490/anchor 84s
+[lex prefix4c] 204/anchor 86s
+[lex tokc300] 52/anchor 109s
+GEN DONE 109.11003351211548

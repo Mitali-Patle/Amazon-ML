@@ -1,0 +1,9 @@
+anchors 3000 pairs 10971
+                 group  n_pairs  any_before  rare200_before  rare3000_before  any_after  rare200_after  rare3000_after
+                   ALL    10971       84.86           28.14            55.17      90.85          28.31           55.29
+           latin-latin    10120       91.50           30.50            59.81      91.89          30.69           59.94
+non-latin(either side)      851        5.88            0.00             0.00      78.50           0.00            0.00
+           target=deva      433        0.00            0.00             0.00      83.60           0.00            0.00
+    target=indic-other      361        0.00            0.00             0.00      68.98           0.00            0.00
+          target=latin    10120       91.50           30.50            59.81      91.89          30.69           59.94
+          target=mixed       57       87.72            0.00             0.00     100.00           0.00            0.00

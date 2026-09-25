@@ -1,0 +1,31 @@
+anchor_id	anchor_country	anchor_name	anchor_addr	missed_id	missed_src	missed_script	missed_name	missed_addr	n_matches	exact_name
+S1-594757758	India	Ideal Institute	Pno 4/22 7 No 4, Rambag Colony, Navi Peth, Pune, Maharashtra	S3-912808611	S3	latin	Dr Ideal Service	Pno 4/22 7 No 4, Mumbai, Pune, MH	7	diff_name
+S1-166693716	India	White One Estate Private Limited	No.241, 12Th Block, 5Th Cross, 2Nd Stage, Nagarabhavi, Bangalore North, Bangalore, Karnataka	S3-418353639	S3	latin	White One Estate		7	exact_name
+S1-638445981	India	Alpha Solutions Private Limited	Shop No 1, Basement, Vrindavan Eye Swasthya Vihar, Near Op Dental College, Rbl Road, Lucknow, Uttar Pradesh	S3-121455916	S3	latin	Alpha Solutions Private Limited & Co		5	exact_name
+S1-120656	India	Smart Nidhi	Yogalon Estateopp Jain Derasar Vastadevdi Road, Surat, Gujarat	S3-206357703	S3	latin	Smart Nidhi Ltd		6	exact_name
+S1-509920228	India	Nak Storage LLP	C-16, J.P. Colony, Naya Kheda, Near Sector 4, Vidhyadhar Nagar, Jaipur, Rajasthan	S3-133651554	S3	latin	Smt Nak Nak Sctgre LLP		7	diff_name
+S1-719693602	India	Balaji Engineering	1-H1, Karthik Nagar Sowripalayam, Coimbatore, Tamil Nadu	S3-570765955	S3	latin	Smt Balaji-Eninierting	Coimbatore, 1-H1, TN, N/A, Coimbatore	2	diff_name
+S1-438088044	India	Ambit Traders Pvt Ltd	11 - A, Teen Murti Marg, New Delhi, Central Delhi, Delhi	S3-22389913	S3	latin	Sri Ambit Pvt Ltd Center	1 - A, DL, NULL, New Delhi	3	diff_name
+S1-927225327	India	Krishna Tirupati Technologies Private Limited	No. 119A Bommasandra Industrial Area, Hebbagodi, Bengaluru, Bangalore, Karnataka	S3-447622503	S3	latin	Krishna Tirupati Technologies  Private Limited		4	exact_name
+S1-608482773	US	Birch	Charlotte, Unit D, NC, 4124 Firwood Lane	S2-595934226	S2	latin	8irch Co	FIRWOOD LN, CHARLOTTE TOWNSHIP, NC	4	diff_name
+S1-544413911	US	Green Santander of Augusta County	32 Kite Place, Augusta County, VA	S2-163868757	S2	latin	Umbranex	32 KITE PLACE, WAYNESBORO, VA	4	diff_name
+S1-307802828	US	Clark Royalty PC	24962 Ambrose Road, Plainfield, IL	S2-163676327	S2	latin	CLARK PC SERVICE		5	diff_name
+S1-941949599	US	Behavioral Health Specialists LLC	517 Avenue A, Portales, NM	S2-272493982	S2	latin	Behavioral Health LLC Partners		4	diff_name
+S1-410504298	US	Golden Deli LLC	2323 3330, Emory, TX	S2-655924744	S2	latin	Golden Deli Enterprises		2	diff_name
+S1-156907244	US	Apex Prime Health Inc	397 14 Street, Brooklyn, NY	S3-835038051	S3	latin	apex prime health inc		2	exact_name
+S1-44286490	US	Metropolitan Commercial Enterprises L.L.C.	17012 39th Avenue, Plymouth, MN	S3-517656527	S3	latin	Metropolitan Commercial		5	diff_name
+S1-781414288	US	Wood and Topete PC	17657 Eagle Avenue, Clear Lake, IA	S3-856633279	S3	latin	Wood and Tpct PC		5	diff_name
+S1-927863317	US	Caex, LLC	11844 Zumbrota Street, MN, Blaine	S3-796693931	S3	latin	Caex, LLC		5	exact_name
+S1-51718244	US	Pediatric Partners	1120 Bunker Hill Ct, Bettendorf, IA	S3-525158335	S3	latin	Pediatric Pártnérs		4	exact_name
+S1-718022485	India	Central & Co	219 Ratandeep Complex Civil Lines, Bareilly, Uttar Pradesh, Bareilly	S2-114764191	S2	latin	central.com		3	diff_name
+S1-591021514	India	Kalpatharu Trading LLP	No.80, 2Nd Floor, 4Th Main Arakere, Bangalore, Karnataka	S2-155397198	S2	latin	Mr Fayejax	NO 80, BANGALORE, HULIMAVU, Karnataka	4	diff_name
+S1-913481661	India	SK Communication Private Limited	Burnpur Road Court More, Asansol, Bardhaman, West Bengal	S2-118643958	S2	latin	SK Communication  Privaae Limited (ID: 23170)		6	diff_name
+S1-481897962	India	Mahan Wearables Limited	5Th Cross, 6Th Main, Meenakshinagar, Karnataka, No.54, Bangalore, Bangaore	S2-238590282	S2	latin	PYRAWEX	DIOR NO 54, BANGALORE, BENGALURU URBAN, Karnataka	4	diff_name
+S1-401095160	India	Fortune Ace Foods LLP	19, Babubhai Chawl, V M Road, Nehru Nagar, Opp. Murugan Chawl, Vile Parle(W), Mumbai, Mumbai City, Maharashtra	S2-976579522	S2	latin	FORTUNE ACE FOODS LLP		7	exact_name
+S1-364011667	India	Dream Systems Private Limited	66, West Bengal, Howrah, Kolkata, Phears Lane, Kolkata	S2-232578343	S2	nonlatin	ড্রিম সিস্টেমস প্রাইভেট লিমিটেড	66, KOLKATA, পশ্চিমবঙ্গ	3	diff_name
+S1-172521846	India	Real Energy Private Limited	No.47, Periyar Nagar - 1, Erode, Tamil Nadu	S2-130570054	S2	nonlatin	ரியல் எனர்ஜி பிரைவேட் லிமிடெட்	NO.17, PERIYAR NAGAR - 1, WESTERN REGION COIMBATORE, ERODE, Tamil Nadu	4	diff_name
+S1-719758759	India	Royal Agro Private Limited	5Th Floor, Navsonarbala, Turner Road, Nest To Fab India, Bandra, Flat No 20, Mumbai, Maharashtra	S2-759673856	S2	nonlatin	रॉयल एग्रो प्राइवेट लिमिटेड	FLAT NO 20, MUMBAI, Maharashtra	3	diff_name
+S1-279399254	India	Modern Construction Limited	37, Singaravelan Nagar, 1St Street, Maduravoyal, Poonamalee, Tiruvallur, Tamil Nadu	S2-728237727	S2	nonlatin	மாடர்ன் கன்ஸ்ட்ரக்ஷன் லிமிடெட்	##37, TIRUVALLUR, POONAMALEE, Tamil Nadu	5	diff_name
+S1-201618694	India	My Services Private Limited	3/15, Shabd Pratap Ashram Colony No. 3, Gwalior, Madhya Pradesh	S3-714940859	S3	nonlatin	माय Services प्राइवेट लिमिटेड	G-3/15, Gwalior, MP	5	diff_name
+S1-678217170	India	Surya International Private Limited	B147, 14 Flr, Ats Bouquet, Jaypee Kosmos Rd., Sec 132, Dadri, Gautam Buddha Nagar, Uttar Pradesh	S3-497578057	S3	nonlatin	सूर्या इंटरनेशनल प्राइवेट लिमिटेड	B##147, Bisrakh Jalalpur, UP	4	diff_name
+S1-282291458	India	Tirupati Producer Private Limited	Pune, Tower 'E', Next To Don Bosco School, Off Airport Road, Maharashtra, Yerawada, Tech Park One	S3-416004079	S3	nonlatin	तिरुपति प्रोड्यूसर प्राइवेट लिमिटेड	Teh Park One, Pune, Yerawada, MH	3	diff_name

@@ -1,0 +1,13 @@
+18:54:50 val anchors 49999 {('India', False): 1118, ('India', True): 18892, ('US', False): 1674, ('US', True): 28315}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights:   3%|▎         | 5/199 [00:00<00:07, 24.45it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 761.53it/s]
+18:55:18 pool loaded rss 2.8GB
+18:56:00 [india] pool 4133346 blockers fit, rss 4.4GB peak 5.9GB
+18:56:03 [india] pool embeddings GPU-resident
+/home/kr95/Projects/Amazon-ML/src/blocking/candidates.py:112: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:213.)
+  at = torch.from_numpy(a[s:s + 250_000]).to('cuda'); pt = torch.from_numpy(p[s:s + 250_000]).to('cuda')
+18:58:24 [india] chunk 1/1 anchors 20010/49999 mean cands 135.6 [dense 88s lex 38s select 14s per 20010 anchors] elapsed 3.0m ETA 4.4m rss 4.5GB peak 6.1GB
+18:59:05 [us] pool 6186873 blockers fit, rss 5.2GB peak 7.4GB
+18:59:09 [us] pool embeddings GPU-resident
+19:02:43 [us] chunk 1/1 anchors 49999/49999 mean cands 134.2 [dense 152s lex 45s select 17s per 29989 anchors] elapsed 7.3m ETA 0.0m rss 4.6GB peak 7.4GB
+19:02:55 METRICS {"anchors": 49999, "true_pairs": 173067, "pair_R": 97.52870275673583, "any_hit": 99.7479187408647, "cluster_full": 92.08168280127947, "cand_mean": 134.74457489149782, "cand_max": 150, "cand_singleton_mean": 141.3356017191977, "wall_s": 484.816686630249, "peak_rss_gb": 7.415268}

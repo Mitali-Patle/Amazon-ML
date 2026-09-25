@@ -1,0 +1,12 @@
+rows source1 2206821
+rows source2 5034616
+rows source3 5285603
+rows gt 2206821
+prefix ok source1
+prefix ok source2
+prefix ok source3
+GT<->S1 ids identical
+many-to-one ok 7638365
+country agreement ok
+countries S1: {'US': 1323633, 'India': 883188}
+AUDIT PASS

@@ -1,0 +1,6 @@
+train 1 ok raw preserved + aligned; core-empty == name-empty: 0
+train 2 ok raw preserved + aligned; core-empty == name-empty: 0
+train 3 ok raw preserved + aligned; core-empty == name-empty: 0
+test 1 ok raw preserved + aligned; core-empty == name-empty: 0
+test 2 ok raw preserved + aligned; core-empty == name-empty: 0
+test 3 ok raw preserved + aligned; core-empty == name-empty: 0

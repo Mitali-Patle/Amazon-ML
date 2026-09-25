@@ -1,0 +1,116 @@
+
+######## sample1(5k,tuned): anchors 5000 (matched 4721, singleton 279), true pairs 17184, {'US': 2959, 'India': 2041}
+
+== sample1(5k,tuned) D70+E20+L60: cands mean 135.0 max 150 | matched 134.6 | singleton mean 141.4 min 80 max 150
+   pair_R 97.70 [97.46,97.97]  any_hit 99.66 [99.47,99.81]  cluster 92.61 [91.91,93.41]
+                             pairs anchors               pair_R              cluster               any_hit
+country=India                 6988    1907  96.28 [95.72,96.81]  88.67 [87.15,90.25]   99.27 [98.95,99.69]
+country=US                   10196    2814  98.67 [98.46,98.87]  95.27 [94.60,95.98]  99.93 [99.79,100.00]
+script=latin                 15935    4633  98.07 [97.84,98.29]  93.74 [93.05,94.39]   99.59 [99.40,99.76]
+script=nonlatin               1249     628  92.95 [91.27,94.55]  88.69 [86.62,91.24]   94.75 [92.99,96.34]
+src=S2                        8306    4331  97.80 [97.45,98.11]  96.01 [95.34,96.54]   98.68 [98.31,99.03]
+src=S3                        8878    4383  97.60 [97.25,97.88]  95.46 [94.87,96.01]   98.93 [98.65,99.20]
+nmatch=1                       276     276  97.10 [95.29,98.91]  97.10 [95.29,98.91]   97.10 [95.29,98.91]
+nmatch=2-3                    5355    2077  97.55 [97.09,97.94]  94.37 [93.35,95.19]   99.71 [99.42,99.90]
+nmatch=4+                    11553    2368  97.78 [97.47,98.10]  90.54 [89.44,91.85]  99.92 [99.79,100.00]
+name=diff_name                9931    4183  96.72 [96.36,97.04]  93.07 [92.35,93.74]   98.66 [98.30,98.97]
+name=exact_name               7253    3591  99.03 [98.79,99.23]  98.16 [97.69,98.52]   99.30 [99.03,99.50]
+India,script=India-latin      5739    1819  97.00 [96.58,97.44]  91.37 [90.05,92.64]   99.07 [98.63,99.51]
+India,script=India-nonlatin   1249     628  92.95 [91.27,94.55]  88.69 [86.62,91.24]   94.75 [92.99,96.34]
+US,script=US-latin           10196    2814  98.67 [98.46,98.87]  95.27 [94.60,95.98]  99.93 [99.79,100.00]
+
+== sample1(5k,tuned) D50+E20+L40: cands mean 97.5 max 110 | matched 97.1 | singleton mean 103.8 min 60 max 110
+   pair_R 97.38 [97.11,97.66]  any_hit 99.62 [99.43,99.79]  cluster 91.72 [90.98,92.59]
+                             pairs anchors               pair_R              cluster               any_hit
+country=India                 6988    1907  95.85 [95.32,96.41]  87.68 [86.21,89.25]   99.16 [98.74,99.69]
+country=US                   10196    2814  98.43 [98.21,98.65]  94.46 [93.71,95.31]  99.93 [99.79,100.00]
+script=latin                 15935    4633  97.81 [97.57,98.03]  92.99 [92.32,93.63]   99.57 [99.35,99.76]
+script=nonlatin               1249     628  91.91 [90.05,93.71]  87.58 [85.51,90.14]   93.79 [92.20,95.54]
+src=S2                        8306    4331  97.50 [97.15,97.84]  95.50 [94.90,96.08]   98.59 [98.20,98.94]
+src=S3                        8878    4383  97.27 [96.94,97.57]  94.91 [94.25,95.46]   98.77 [98.47,99.04]
+nmatch=1                       276     276  96.74 [94.93,98.55]  96.74 [94.93,98.55]   96.74 [94.93,98.55]
+nmatch=2-3                    5355    2077  97.16 [96.72,97.55]  93.45 [92.34,94.32]   99.66 [99.37,99.90]
+nmatch=4+                    11553    2368  97.50 [97.19,97.85]  89.61 [88.47,90.96]  99.92 [99.79,100.00]
+name=diff_name                9931    4183  96.26 [95.89,96.62]  92.21 [91.39,92.90]   98.47 [98.06,98.81]
+name=exact_name               7253    3591  98.91 [98.65,99.12]  97.94 [97.49,98.36]   99.28 [99.00,99.50]
+India,script=India-latin      5739    1819  96.71 [96.24,97.21]  90.71 [89.39,92.09]   99.01 [98.51,99.45]
+India,script=India-nonlatin   1249     628  91.91 [90.05,93.71]  87.58 [85.51,90.14]   93.79 [92.20,95.54]
+US,script=US-latin           10196    2814  98.43 [98.21,98.65]  94.46 [93.71,95.31]  99.93 [99.79,100.00]
+
+######## sample2(holdout): anchors 10001 (matched 9442, singleton 559), true pairs 34553, {'US': 6002, 'India': 3999}
+
+== sample2(holdout) D70+E20+L60: cands mean 135.0 max 150 | matched 134.6 | singleton mean 141.7 min 71 max 150
+   pair_R 97.55 [97.37,97.73]  any_hit 99.75 [99.65,99.85]  cluster 92.09 [91.57,92.67]
+                             pairs anchors               pair_R              cluster               any_hit
+country=India                13701    3777  95.87 [95.45,96.22]  87.48 [86.47,88.30]   99.47 [99.23,99.68]
+country=US                   20852    5665  98.65 [98.49,98.80]  95.16 [94.62,95.68]   99.93 [99.86,99.98]
+script=latin                 32052    9226  97.97 [97.79,98.12]  93.36 [92.79,93.88]   99.69 [99.57,99.78]
+script=nonlatin               2501    1249  92.12 [90.83,93.46]  87.59 [85.75,89.27]   94.64 [93.35,95.68]
+src=S2                       16704    8681  97.74 [97.51,97.97]  95.95 [95.52,96.33]   99.02 [98.81,99.22]
+src=S3                       17849    8757  97.36 [97.11,97.55]  95.01 [94.58,95.43]   98.84 [98.61,99.06]
+nmatch=1                       560     560  97.68 [96.60,98.75]  97.68 [96.60,98.75]   97.68 [96.60,98.75]
+nmatch=2-3                   10573    4091  97.62 [97.31,97.89]  94.43 [93.77,95.11]   99.76 [99.61,99.88]
+nmatch=4+                    23420    4791  97.51 [97.32,97.76]  89.44 [88.75,90.46]  99.98 [99.94,100.00]
+name=diff_name               19763    8384  96.46 [96.15,96.71]  92.65 [92.11,93.20]   98.88 [98.68,99.08]
+name=exact_name              14790    7296  99.00 [98.82,99.15]  98.00 [97.64,98.29]   99.41 [99.23,99.56]
+India,script=India-latin     11200    3561  96.71 [96.36,97.05]  90.48 [89.58,91.38]   99.30 [98.99,99.52]
+India,script=India-nonlatin   2501    1249  92.12 [90.83,93.46]  87.59 [85.75,89.27]   94.64 [93.35,95.68]
+US,script=US-latin           20852    5665  98.65 [98.49,98.80]  95.16 [94.62,95.68]   99.93 [99.86,99.98]
+
+== sample2(holdout) D50+E20+L40: cands mean 97.5 max 110 | matched 97.1 | singleton mean 104.0 min 52 max 110
+   pair_R 97.34 [97.17,97.52]  any_hit 99.72 [99.63,99.83]  cluster 91.48 [90.98,92.02]
+                             pairs anchors               pair_R              cluster               any_hit
+country=India                13701    3777  95.52 [95.10,95.87]  86.52 [85.49,87.50]   99.42 [99.18,99.63]
+country=US                   20852    5665  98.54 [98.37,98.68]  94.79 [94.26,95.32]   99.93 [99.86,99.98]
+script=latin                 32052    9226  97.80 [97.63,97.96]  92.84 [92.23,93.39]   99.66 [99.53,99.76]
+script=nonlatin               2501    1249  91.48 [90.07,92.82]  86.55 [84.70,88.47]   94.00 [92.63,95.12]
+src=S2                       16704    8681  97.53 [97.29,97.76]  95.58 [95.17,95.98]   98.92 [98.71,99.11]
+src=S3                       17849    8757  97.17 [96.90,97.37]  94.68 [94.22,95.10]   98.74 [98.50,98.95]
+nmatch=1                       560     560  97.50 [96.25,98.57]  97.50 [96.25,98.57]   97.50 [96.25,98.57]
+nmatch=2-3                   10573    4091  97.44 [97.13,97.74]  94.01 [93.33,94.70]   99.73 [99.56,99.85]
+nmatch=4+                    23420    4791  97.30 [97.11,97.56]  88.62 [87.91,89.71]  99.98 [99.94,100.00]
+name=diff_name               19763    8384  96.18 [95.85,96.47]  92.10 [91.40,92.72]   98.76 [98.54,98.96]
+name=exact_name              14790    7296  98.90 [98.73,99.06]  97.81 [97.48,98.12]   99.40 [99.22,99.53]
+India,script=India-latin     11200    3561  96.42 [96.06,96.75]  89.72 [88.71,90.62]   99.24 [98.96,99.49]
+India,script=India-nonlatin   2501    1249  91.48 [90.07,92.82]  86.55 [84.70,88.47]   94.00 [92.63,95.12]
+US,script=US-latin           20852    5665  98.54 [98.37,98.68]  94.79 [94.26,95.32]   99.93 [99.86,99.98]
+
+=== summary
+           sample         cfg  cand_mean  cand_max  single_mean  pair_R  any_hit  cluster_full  pair_lo  pair_hi
+sample1(5k,tuned) D70+E20+L60     134.98       150       141.44   97.70    99.66         92.61    97.46    97.97
+sample1(5k,tuned) D50+E20+L40      97.46       110       103.84   97.38    99.62         91.72    97.11    97.66
+ sample2(holdout) D70+E20+L60     135.00       150       141.67   97.55    99.75         92.09    97.37    97.73
+ sample2(holdout) D50+E20+L40      97.51       110       104.01   97.34    99.72         91.48    97.17    97.52
+
+misses in sample2 D70+E20+L60: 848
+                                      anchor_name                                     missed_name missed_src missed_script  n_matches
+0                                 Ideal Institute                                Dr Ideal Service         S3         latin          7
+1                White One Estate Private Limited                                White One Estate         S3         latin          7
+2                 Alpha Solutions Private Limited            Alpha Solutions Private Limited & Co         S3         latin          5
+3                                     Smart Nidhi                                 Smart Nidhi Ltd         S3         latin          6
+4                                 Nak Storage LLP                          Smt Nak Nak Sctgre LLP         S3         latin          7
+5                              Balaji Engineering                          Smt Balaji-Eninierting         S3         latin          2
+6                           Ambit Traders Pvt Ltd                        Sri Ambit Pvt Ltd Center         S3         latin          3
+7   Krishna Tirupati Technologies Private Limited  Krishna Tirupati Technologies  Private Limited         S3         latin          4
+8                                           Birch                                        8irch Co         S2         latin          4
+9               Green Santander of Augusta County                                        Umbranex         S2         latin          4
+10                               Clark Royalty PC                                CLARK PC SERVICE         S2         latin          5
+11              Behavioral Health Specialists LLC                  Behavioral Health LLC Partners         S2         latin          4
+12                                Golden Deli LLC                         Golden Deli Enterprises         S2         latin          2
+13                          Apex Prime Health Inc                           apex prime health inc         S3         latin          2
+14     Metropolitan Commercial Enterprises L.L.C.                         Metropolitan Commercial         S3         latin          5
+15                             Wood and Topete PC                                Wood and Tpct PC         S3         latin          5
+16                                      Caex, LLC                                       Caex, LLC         S3         latin          5
+17                             Pediatric Partners                              Pediatric Pártnérs         S3         latin          4
+18                                   Central & Co                                     central.com         S2         latin          3
+19                         Kalpatharu Trading LLP                                      Mr Fayejax         S2         latin          4
+20               SK Communication Private Limited   SK Communication  Privaae Limited (ID: 23170)         S2         latin          6
+21                        Mahan Wearables Limited                                         PYRAWEX         S2         latin          4
+22                          Fortune Ace Foods LLP                           FORTUNE ACE FOODS LLP         S2         latin          7
+23                  Dream Systems Private Limited                 ড্রিম সিস্টেমস প্রাইভেট লিমিটেড         S2      nonlatin          3
+24                    Real Energy Private Limited                  ரியல் எனர்ஜி பிரைவேட் லிமிடெட்         S2      nonlatin          4
+25                     Royal Agro Private Limited                     रॉयल एग्रो प्राइवेट लिमिटेड         S2      nonlatin          3
+26                    Modern Construction Limited                  மாடர்ன் கன்ஸ்ட்ரக்ஷன் லிமிடெட்         S2      nonlatin          5
+27                    My Services Private Limited                   माय Services प्राइवेट लिमिटेड         S3      nonlatin          5
+28            Surya International Private Limited               सूर्या इंटरनेशनल प्राइवेट लिमिटेड         S3      nonlatin          4
+29              Tirupati Producer Private Limited             तिरुपति प्रोड्यूसर प्राइवेट लिमिटेड         S3      nonlatin          3
