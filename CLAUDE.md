@@ -51,7 +51,7 @@ You are one specialist on a small AI "war room" helping a student team compete i
 - Round 1 is a hackathon. The problem statement and dataset drop on Day 1. The assessment window is **24 Sep 2026 18:30 UTC → 27 Sep 2026 18:29 UTC** (00:00 IST 25 Sep → 23:59 IST 27 Sep). Once started, the timer does not stop.
 - A **public leaderboard** is computed on part of the test set, live. A **private leaderboard** on the full test set is revealed afterwards. That private leaderboard decides the outcome, so never overfit the public one.
 - **Ranking uses the max score, with ties broken by submission time** (earlier wins). Submitting a strong score early has real value.
-- Final deliverables: a **1–2 page approach document** plus **code/scripts/notebooks in a zip**.
+- Final deliverables: a single **`<team_name>_submission.zip`** containing `output/` (`matching_results.tsv` + `candidate_pairs.tsv`), `code/business_entity_resolution/` (`src/`, `README.md` with exact run steps, pinned `requirements.txt`), and the filled-in `Documentation_template.md` methodology doc (**no page limit**; prioritise clarity and technical depth). Top teams' packages are audited for fair play and licences.
 - **Top 10 teams** (leaderboard score plus document quality) are invited to a virtual **Grand Finale on 7 Oct 2026** to present to Amazon scientists. Top 3 win cash prizes.
 
 ### Competition history (reconstructed from memory — treat specifics as "likely, verify")
@@ -63,7 +63,7 @@ You are one specialist on a small AI "war room" helping a student team compete i
   - out-of-fold kNN-neighbor price features;
   - LoRA-fine-tuned LLMs (Qwen2.5/Qwen3, Llama-family) with regression heads;
   - blending in log space, then metric-aware calibration.
-- **The recurring pattern:** noisy multimodal Amazon catalog data, images delivered as URLs that must be downloaded, a strict output format plus a sanity checker, a metric with exploitable quirks, and hard rules on external data and model size and licensing. Expect 2026 to rhyme with this until the problem statement proves otherwise.
+- **The recurring pattern:** noisy multimodal Amazon catalog data, images delivered as URLs that must be downloaded, a strict output format plus a sanity checker, a metric with exploitable quirks, and hard rules on external data and model size and licensing. **2026 did NOT rhyme on task type:** it is Business Entity Resolution (text-only record linkage, no images), though it keeps the strict format + validator, the metric quirks (singletons), and the no-external-data / MIT-Apache-2.0 / ≤8B rules. See the 2026 section below.
 
 ### Winning principles (all agents follow these)
 1. **Metric first.** Implement the exact official metric locally, and unit-test it against hand-computed examples, before any modeling.
@@ -91,12 +91,26 @@ If a file doesn't exist yet and your role owns it, create it. Never delete anoth
 
 ---
 
-## 2026 PROBLEM GUIDANCE — entity resolution (organizer hints; applies to every agent)
-The 2026 task is record linkage across three business-listing sources (source1 anchors matched to S2/S3 records). Organizer tips, verbatim in spirit:
+## 2026 PROBLEM — Business Entity Resolution (confirmed from the official statement; applies to every agent)
+Source of truth: `resources/6ab5628d5a817_amazon_ml_challenge_problem_statement.pdf`; digest in `docs/PROBLEM_BRIEF.md`.
+
+**Task:** Source 1 is the deduplicated reference. For each source1 entity, find all matching records in Source 2 and Source 3 (zero, one, or many). Files are TSV (`sep="\t"`); columns `entity_id, business_name, business_address, country`. Ground truth `train_ground_truth.tsv`: `source1_entity_id, matched_entity_ids` (comma-separated S2-/S3- ids, empty for singletons).
+
+**Metric (confirmed):** per-source1-entity F_0.5 (β=0.5, `1.25·P·R / (0.25·P + R)`), **macro-averaged over ALL source1 entities, singletons included**. Singleton: empty prediction = 1.0, any prediction = 0.0. Public LB on a subset of test, private LB on the rest decides ranking.
+
+**Hard rules and traps:**
+- **France appears only in the test set** (train is US + India). `country` is an open set: never hard-code, filter or one-hot on {US, India}. Same-country matching is fine; every test entity, France included, must appear in the submission. France cannot be validated locally, so favour language-agnostic features and be conservative there.
+- **Two output files** (TSV, in `output/`): `matching_results.tsv` (the only file scored) and `candidate_pairs.tsv` (the final candidate set actually fed to the matching model; matched ids must be a subset of it; used by organizers to audit recall ceiling and reduction ratio, so keep candidate sets small, e.g. ≤150 per entity).
+- Submission validity: exactly one row per test source1 entity, no duplicate ids in a list or duplicate source1 rows, only S2/S3 ids that exist in the test set (no self-matches to S1). Invalid files are not scored. Run the organizers' `utils/validate_submission.py --matching output/matching_results.tsv --candidate output/candidate_pairs.tsv --test-dir dataset/test` before every upload (`submission-qa` gate).
+- Final model must be **MIT/Apache-2.0 and ≤8B parameters**. **External data lookup is strictly prohibited** (commercial ER APIs, government registries, geocoding APIs, any internet augmentation): immediate disqualification. Use only the provided training data.
+- `data/test/` is write-only: never split, sample, profile or tune on it.
+
+**Organizer tips (2026):**
 - **Blocking / candidate generation sets the recall ceiling.** Invest in it first; no downstream matcher can recover a true match the blocker never proposed.
 - **String-similarity features** for name and address: Jaccard, Levenshtein, TF-IDF cosine (plus the usual cheap extras).
-- **Country-specific address patterns** matter (US vs India formats, scripts/transliteration, e.g. Devanagari names). Handle per country.
+- **Country-specific address patterns** matter (US vs India formats, scripts/transliteration, e.g. Devanagari names; France in test only). Handle per country without hard-coding a country list.
 - **Precision-recall trade-off: the metric is F_0.5**, which weights precision more than recall. Tune thresholds/top-k on validation for F_0.5, not F1.
 - **Do not neglect singletons.** Correctly predicting "no match" for an entity scores a full 1.0 (~5.6% of train source1 rows have an empty match list). Never force a match.
 - **Validate your own output format against the official rules before every submission** (`submission-qa` gate, no exceptions).
-Note: F_0.5 and the exact per-entity scoring come from organizer hints; `problem-analyst` must confirm the exact formula and submission format from the official statement and record it in `docs/PROBLEM_BRIEF.md`.
+
+**Established by Day-1 EDA (train only; see `docs/EDA_FINDINGS.md`, `docs/DECISIONS.md` ADR-001/002):** match graph is disjoint stars (each S2/S3 id matched by exactly one anchor) so an anchor-id split is leak-free; do not group by name. Split lives in `src/folds.py`, metric in `src/metric.py`, blocking harness in `src/blocking/`.

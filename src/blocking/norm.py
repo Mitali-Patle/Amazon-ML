@@ -8,6 +8,16 @@ def nname(s):
     s = s.str.replace(r'[^\p{L}\p{N}\p{M} ]', ' ', regex=True).str.replace(SUF, ' ', regex=True)
     return s.str.replace(r'\s+', ' ', regex=True).str.strip()
 
+def naddr(s):
+    """light address normalization for embedding text: NFKD accent strip (Latin marks only), lowercase, drop punctuation/NULL tokens. Script kept."""
+    s = s.str.normalize('NFKD').str.replace(r'[̀-ͯ]', '', regex=True).str.lower()
+    s = s.str.replace(r'[^\p{L}\p{N}\p{M} ]', ' ', regex=True).str.replace(r'\bnull\b', ' ', regex=True)
+    return s.str.replace(r'\s+', ' ', regex=True).str.strip()
+
+def embed_text(name_raw, addr_raw):
+    """'name | address' string for dense encoders (normalized, original script kept, no transliteration)."""
+    return (nname(name_raw) + ' | ' + naddr(addr_raw)).values
+
 def addr_nums(s):
     """space-joined numeric tokens of an address (order-free), e.g. '1795'."""
     return s.str.findall(r'\d+').str.join(' ')

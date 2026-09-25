@@ -65,4 +65,54 @@ class Union(Blocker):
         a = np.concatenate([x[0] for x in r]); p = np.concatenate([x[1] for x in r])
         u = np.unique(a.astype(np.int64) * (1 << 32) + p)
         return u >> 32, u & ((1 << 32) - 1)
-# Plug-in slots (same interface): TfidfChar(ngram=(2,4), topk) via sparse NN; EmbANN(model, topk) via FAISS/HNSW.
+
+class EmbANN(Blocker):
+    """Dense blocker: sentence-transformers e5 model, per-country exact top-k inner-product search (GPU matmul, chunked).
+    Requires a `text` column in pool and anchors (norm.embed_text). Countries are derived from the data.
+    e5 prefixes: pool -> 'passage: ', anchors -> 'query: '. fp16, embeddings L2-normalized, kept as fp16 on CPU."""
+    def __init__(self, model='intfloat/multilingual-e5-small', topk=50, bs=512, max_len=64, cache=None, device='cuda'):
+        self.model_name, self.k, self.bs, self.max_len, self.cache, self.device = model, topk, bs, max_len, cache, device
+        self.name = f"emb_{model.split('/')[-1]}_top{topk}"; self.stats = {}
+    def _model(self):
+        if not hasattr(self, 'm'):
+            from sentence_transformers import SentenceTransformer
+            self.m = SentenceTransformer(self.model_name, device=self.device, model_kwargs={'torch_dtype': 'float16'})
+            self.m.max_seq_length = self.max_len
+        return self.m
+    def encode(self, texts, prefix):
+        import time, torch
+        txt = np.asarray([prefix + t for t in texts], dtype=object)
+        order = np.argsort([len(t) for t in txt], kind='stable')  # length-sorted batches
+        m = self._model(); torch.cuda.reset_peak_memory_stats(); t0 = time.time()
+        e = m.encode(list(txt[order]), batch_size=self.bs, normalize_embeddings=True, convert_to_numpy=True, show_progress_bar=False)
+        dt = time.time() - t0
+        out = np.empty_like(e, dtype=np.float16); out[order] = e.astype(np.float16)
+        self.stats[prefix.strip()] = dict(n=len(txt), sec=dt, rec_per_s=len(txt) / dt, peak_vram_gb=torch.cuda.max_memory_allocated() / 1e9)
+        return out
+    def fit(self, pool):
+        self.pool = pool.reset_index(drop=True)
+        self.E = self.encode(self.pool.text.values, 'passage: ')
+        self.cidx = {c: np.flatnonzero(self.pool.country.values == c) for c in self.pool.country.unique()}
+        return self
+    def query(self, anchors, chunk=4096, pchunk=1_000_000):
+        import torch
+        anchors = anchors.reset_index(drop=True)
+        Q = self.encode(anchors.text.values, 'query: ')
+        A, P = [], []
+        for c, ai in ((c, np.flatnonzero(anchors.country.values == c)) for c in anchors.country.unique()):
+            pi = self.cidx.get(c)
+            if pi is None or len(pi) == 0: continue
+            k = min(self.k, len(pi))
+            for s in range(0, len(ai), chunk):
+                a = ai[s:s + chunk]; q = torch.from_numpy(Q[a]).to(self.device)
+                bv = bi = None
+                for ps in range(0, len(pi), pchunk):
+                    sub = pi[ps:ps + pchunk]
+                    sc = q @ torch.from_numpy(self.E[sub]).to(self.device).T
+                    v, i = sc.topk(min(k, len(sub)), dim=1); i = i + ps
+                    if bv is None: bv, bi = v, i
+                    else:
+                        v2, j = torch.cat([bv, v], 1).topk(k, dim=1); bi = torch.cat([bi, i], 1).gather(1, j); bv = v2
+                bi = bi.cpu().numpy()
+                A.append(np.repeat(a, bi.shape[1])); P.append(pi[bi.ravel()])
+        return np.concatenate(A), np.concatenate(P)
