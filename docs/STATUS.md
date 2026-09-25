@@ -31,3 +31,6 @@ See `docs/DECISIONS.md` ADR-001 for the full train/val split strategy and reason
 
 ## 2026-09-25 - data-detective EDA pointer
 See `docs/EDA_FINDINGS.md`. Top findings: (1) match graph = disjoint stars, every S2/S3 id matched by exactly one anchor, so split by anchor id is leak-free; (2) 1-to-many: mean 3.46 matches/anchor, 80.5% mix S2+S3, 5.58% empty, 26% of S2/S3 are pure distractors; (3) chain names common (48.9% of S1 share a name) with disjoint matches, address must discriminate; (4) blocking ceiling: 15% of true pairs share no name token, 42.5% exact name, first-4-char recall 79%, need char-ngram + multilingual embedding + address-number union (country hard-filter is free, 100% agree); (5) noise is in S2/S3 (9.4%/5.3% non-Latin names, ~3.5% empty addresses, ALL-CAPS, typos).
+
+## 2026-09-25 - problem-analyst pointer
+See `docs/PROBLEM_BRIEF.md` (canonical PDF-derived brief: metric, output rules, rejection conditions, open questions).
