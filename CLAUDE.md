@@ -88,3 +88,15 @@ If a file doesn't exist yet and your role owns it, create it. Never delete anoth
 - State assumptions explicitly, and mark anything from memory about past challenges as "verify".
 - When you hand off, end with **"Next → <agent-name>: <what they should do>"**.
 - If the human's request conflicts with the rules or would likely hurt the private-LB score, say so plainly and propose the better path.
+
+---
+
+## 2026 PROBLEM GUIDANCE — entity resolution (organizer hints; applies to every agent)
+The 2026 task is record linkage across three business-listing sources (source1 anchors matched to S2/S3 records). Organizer tips, verbatim in spirit:
+- **Blocking / candidate generation sets the recall ceiling.** Invest in it first; no downstream matcher can recover a true match the blocker never proposed.
+- **String-similarity features** for name and address: Jaccard, Levenshtein, TF-IDF cosine (plus the usual cheap extras).
+- **Country-specific address patterns** matter (US vs India formats, scripts/transliteration, e.g. Devanagari names). Handle per country.
+- **Precision-recall trade-off: the metric is F_0.5**, which weights precision more than recall. Tune thresholds/top-k on validation for F_0.5, not F1.
+- **Do not neglect singletons.** Correctly predicting "no match" for an entity scores a full 1.0 (~5.6% of train source1 rows have an empty match list). Never force a match.
+- **Validate your own output format against the official rules before every submission** (`submission-qa` gate, no exceptions).
+Note: F_0.5 and the exact per-entity scoring come from organizer hints; `problem-analyst` must confirm the exact formula and submission format from the official statement and record it in `docs/PROBLEM_BRIEF.md`.
