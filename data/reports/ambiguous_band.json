@@ -1,0 +1,30 @@
+{
+  "train": {
+    "split_dir": "train",
+    "band": [
+      0.02,
+      0.98
+    ],
+    "total_pairs": 7499950,
+    "kept": 325984,
+    "kept_pct": 4.346,
+    "positives": 130045,
+    "positive_rate": 0.3989,
+    "path": "/home/kundhave/Amazon-ML/data/ambiguous/train_ambiguous.parquet",
+    "mb": 16.7
+  },
+  "val": {
+    "split_dir": "val",
+    "band": [
+      0.02,
+      0.98
+    ],
+    "total_pairs": 11034100,
+    "kept": 289440,
+    "kept_pct": 2.623,
+    "positives": 98455,
+    "positive_rate": 0.3402,
+    "path": "/home/kundhave/Amazon-ML/data/ambiguous/val_ambiguous.parquet",
+    "mb": 14.2
+  }
+}

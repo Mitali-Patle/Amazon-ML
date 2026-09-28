@@ -1,0 +1,72 @@
+{
+  "cascade_macro_f05": 0.96539,
+  "loss_per_entity": {
+    "unretrievable": 0.0051,
+    "singleton_fp": 0.00381,
+    "false_neg": 0.00933,
+    "false_pos": 0.00475
+  },
+  "entities_affected": {
+    "unretrievable": 563,
+    "singleton_fp": 420,
+    "false_neg": 11849,
+    "false_pos": 2267
+  },
+  "ceiling_if_fixed": {
+    "unretrievable": 0.9705,
+    "singleton_fp": 0.9692,
+    "false_neg": 0.9747,
+    "false_pos": 0.9701
+  },
+  "needed_for_098": 0.01461,
+  "calibration": [
+    {
+      "band": "0-0.01",
+      "n": 10580931,
+      "mean_p": 0.0001,
+      "actual": 0.0001
+    },
+    {
+      "band": "0.01-0.1",
+      "n": 72655,
+      "mean_p": 0.0205,
+      "actual": 0.0178
+    },
+    {
+      "band": "0.1-0.3",
+      "n": 8608,
+      "mean_p": 0.1987,
+      "actual": 0.1485
+    },
+    {
+      "band": "0.3-0.5",
+      "n": 4718,
+      "mean_p": 0.3856,
+      "actual": 0.329
+    },
+    {
+      "band": "0.5-0.7",
+      "n": 12473,
+      "mean_p": 0.6127,
+      "actual": 0.5956
+    },
+    {
+      "band": "0.7-0.9",
+      "n": 10082,
+      "mean_p": 0.8074,
+      "actual": 0.7997
+    },
+    {
+      "band": "0.9-0.99",
+      "n": 10853,
+      "mean_p": 0.9737,
+      "actual": 0.9758
+    },
+    {
+      "band": "0.99-1.01",
+      "n": 333780,
+      "mean_p": 0.9989,
+      "actual": 0.9983
+    }
+  ]
+}

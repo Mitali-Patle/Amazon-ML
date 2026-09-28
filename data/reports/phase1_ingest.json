@@ -1,0 +1,154 @@
+{
+  "files": {
+    "train_source1": {
+      "rows": 2206821,
+      "expected": 2206821,
+      "columns": [
+        "entity_id",
+        "business_name",
+        "business_address",
+        "country"
+      ],
+      "null_cells": 0,
+      "empty_name": 0,
+      "empty_address": 0,
+      "empty_country": 0,
+      "bad_prefix": 0,
+      "unique_ids": 2206821,
+      "countries": {
+        "India": 883188,
+        "US": 1323633
+      },
+      "seconds": 0.3,
+      "parquet_mb": 78.8
+    },
+    "train_source2": {
+      "rows": 5034616,
+      "expected": 5034616,
+      "columns": [
+        "entity_id",
+        "business_name",
+        "business_address",
+        "country"
+      ],
+      "null_cells": 0,
+      "empty_name": 0,
+      "empty_address": 168967,
+      "empty_country": 0,
+      "bad_prefix": 0,
+      "unique_ids": 5034616,
+      "countries": {
+        "India": 2017799,
+        "US": 3016817
+      },
+      "seconds": 0.7,
+      "parquet_mb": 191.6
+    },
+    "train_source3": {
+      "rows": 5285603,
+      "expected": 5285603,
+      "columns": [
+        "entity_id",
+        "business_name",
+        "business_address",
+        "country"
+      ],
+      "null_cells": 0,
+      "empty_name": 0,
+      "empty_address": 175916,
+      "empty_country": 0,
+      "bad_prefix": 0,
+      "unique_ids": 5285603,
+      "countries": {
+        "India": 2115547,
+        "US": 3170056
+      },
+      "seconds": 0.7,
+      "parquet_mb": 197.5
+    },
+    "test_source1": {
+      "rows": 1732544,
+      "expected": 1732544,
+      "columns": [
+        "entity_id",
+        "business_name",
+        "business_address",
+        "country"
+      ],
+      "null_cells": 0,
+      "empty_name": 0,
+      "empty_address": 0,
+      "empty_country": 0,
+      "bad_prefix": 0,
+      "unique_ids": 1732544,
+      "countries": {
+        "France": 259452,
+        "US": 663106,
+        "India": 809986
+      },
+      "seconds": 0.2,
+      "parquet_mb": 63.7
+    },
+    "test_source2": {
+      "rows": 4887273,
+      "expected": 4887273,
+      "columns": [
+        "entity_id",
+        "business_name",
+        "business_address",
+        "country"
+      ],
+      "null_cells": 0,
+      "empty_name": 0,
+      "empty_address": 129408,
+      "empty_country": 0,
+      "bad_prefix": 0,
+      "unique_ids": 4887273,
+      "countries": {
+        "France": 703378,
+        "US": 1871330,
+        "India": 2312565
+      },
+      "seconds": 0.6,
+      "parquet_mb": 193.1
+    },
+    "test_source3": {
+      "rows": 5082316,
+      "expected": 5082316,
+      "columns": [
+        "entity_id",
+        "business_name",
+        "business_address",
+        "country"
+      ],
+      "null_cells": 0,
+      "empty_name": 0,
+      "empty_address": 136098,
+      "empty_country": 0,
+      "bad_prefix": 0,
+      "unique_ids": 5082316,
+      "countries": {
+        "France": 731615,
+        "US": 1945701,
+        "India": 2405000
+      },
+      "seconds": 0.6,
+      "parquet_mb": 195.0
+    },
+    "train_ground_truth": {
+      "rows": 2206821,
+      "expected": 2206821,
+      "columns": [
+        "source1_entity_id",
+        "matched_entity_ids"
+      ],
+      "empty_match_lists": 123247,
+      "unique_s1": 2206821,
+      "seconds": 0.2,
+      "parquet_mb": 54.7
+    }
+  },
+  "errors": [],
+  "total_seconds": 5.2,
+  "ok": true
+}

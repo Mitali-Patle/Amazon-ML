@@ -1,0 +1,12 @@
+{
+  "blend_w": 1.0,
+  "band": [
+    0.02,
+    0.98
+  ],
+  "pass_b": {
+    "band_pairs": 21441256,
+    "seconds": 6837.6,
+    "device": "cuda"
+  }
+}

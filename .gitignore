@@ -1,5 +1,22 @@
-# Data (never push)
-data/
+# Data (never push) -- generated parquet/indexes/candidates are large and
+# fully regenerable from the raw TSVs via `python -m src.prep.run_pipeline`.
+# NOTE: must be `data/*` not `data/` -- git cannot re-include a file whose
+# parent directory is excluded, so the negation below would never fire.
+data/*
+# ...but keep the lightweight JSON verification/metric reports under version control.
+!data/reports/
+data/reports/*
+!data/reports/*.json
+
+# Competition dataset (2.4 GB — never push).
+# The dataset/ dir is ignored; the small starter files (README.md,
+# Documentation_template.md, utils/validate_submission.py) stay tracked.
+6ab10eb3b23ba_student_resource/student_resource/dataset/
+6ab10eb3b23ba_student_resource/__MACOSX/
+**/.~lock.*#
+
+# Submission outputs (regenerable, and matching_results.tsv is large)
+output/
 
 # Byte-compiled / cache
 __pycache__/

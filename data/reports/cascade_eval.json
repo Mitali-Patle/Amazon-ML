@@ -1,0 +1,74 @@
+{
+  "pairs": 11034100,
+  "band_pairs": 289440,
+  "results": {
+    "w=0.0": {
+      "macro_f05": 0.931436,
+      "singleton_accuracy": 0.8081,
+      "mean_predictions": 3.061,
+      "by_country": {
+        "India": 0.910922,
+        "US": 0.945124
+      }
+    },
+    "w=0.5": {
+      "macro_f05": 0.956753,
+      "singleton_accuracy": 0.9074,
+      "mean_predictions": 3.082,
+      "by_country": {
+        "India": 0.946301,
+        "US": 0.963728
+      }
+    },
+    "w=0.7": {
+      "macro_f05": 0.963864,
+      "singleton_accuracy": 0.9324,
+      "mean_predictions": 3.152,
+      "by_country": {
+        "India": 0.95508,
+        "US": 0.969725
+      }
+    },
+    "w=0.85": {
+      "macro_f05": 0.965603,
+      "singleton_accuracy": 0.9337,
+      "mean_predictions": 3.192,
+      "by_country": {
+        "India": 0.957093,
+        "US": 0.971281
+      }
+    },
+    "w=1.0": {
+      "macro_f05": 0.965827,
+      "singleton_accuracy": 0.9349,
+      "mean_predictions": 3.222,
+      "by_country": {
+        "India": 0.957359,
+        "US": 0.971477
+      }
+    },
+    "w=0.85+jointcal": {
+      "macro_f05": 0.966384,
+      "singleton_accuracy": 0.9456,
+      "mean_predictions": 3.238,
+      "by_country": {
+        "India": 0.957726,
+        "US": 0.972161
+      }
+    },
+    "w=1.0+jointcal": {
+      "macro_f05": 0.965786,
+      "singleton_accuracy": 0.9386,
+      "mean_predictions": 3.256,
+      "by_country": {
+        "India": 0.957286,
+        "US": 0.971457
+      }
+    }
+  },
+  "baseline_stage1": 0.931436,
+  "best_w": "w=0.85+jointcal",
+  "best_macro_f05": 0.966384,
+  "improvement": 0.03495,
+  "verdict": "GO"
+}

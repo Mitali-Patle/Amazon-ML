@@ -1,0 +1,128 @@
+{
+  "scenarios": {
+    "current": {
+      "macro_f05": 0.928243,
+      "singleton_accuracy": 0.7937,
+      "by_country": {
+        "India": 0.906415,
+        "US": 0.942808
+      }
+    },
+    "current+deconflict": {
+      "macro_f05": 0.928769,
+      "singleton_accuracy": 0.7973,
+      "by_country": {
+        "India": 0.907308,
+        "US": 0.943089
+      }
+    },
+    "oracle_k": {
+      "macro_f05": 0.974497,
+      "singleton_accuracy": 1.0,
+      "by_country": {
+        "India": 0.961161,
+        "US": 0.983395
+      }
+    },
+    "oracle_full": {
+      "macro_f05": 0.983255,
+      "singleton_accuracy": 1.0,
+      "by_country": {
+        "India": 0.970676,
+        "US": 0.991649
+      }
+    }
+  },
+  "loss_attribution": {
+    "total_loss": 0.07123,
+    "singleton_errors": 0.01128,
+    "unretrievable_entities": 0.0051,
+    "false_positives": 0.01242,
+    "false_negatives": 0.03073,
+    "k_vs_hindsight": {
+      "under": 23375,
+      "same": 80250,
+      "over": 6716
+    }
+  },
+  "by_country": {
+    "US": {
+      "entities": 66182,
+      "macro": 0.9431,
+      "loss_share": 0.4792
+    },
+    "India": {
+      "entities": 44159,
+      "macro": 0.9073,
+      "loss_share": 0.5208
+    }
+  },
+  "recall_of_final_predictions": {
+    "cross_script": {
+      "true_pairs": 364481,
+      "recovered": 89.9
+    },
+    "latin_latin": {
+      "true_pairs": 0,
+      "recovered": null
+    }
+  },
+  "worst_entities": [
+    {
+      "entity": "S1-999937360",
+      "loss": 1.0,
+      "n_truth": 0,
+      "n_pred": 4,
+      "n_reachable": 0
+    },
+    {
+      "entity": "S1-999275129",
+      "loss": 1.0,
+      "n_truth": 1,
+      "n_pred": 1,
+      "n_reachable": 0
+    },
+    {
+      "entity": "S1-998895695",
+      "loss": 1.0,
+      "n_truth": 0,
+      "n_pred": 1,
+      "n_reachable": 0
+    },
+    {
+      "entity": "S1-998828872",
+      "loss": 1.0,
+      "n_truth": 1,
+      "n_pred": 0,
+      "n_reachable": 1
+    },
+    {
+      "entity": "S1-998633222",
+      "loss": 1.0,
+      "n_truth": 2,
+      "n_pred": 0,
+      "n_reachable": 1
+    },
+    {
+      "entity": "S1-998485428",
+      "loss": 1.0,
+      "n_truth": 0,
+      "n_pred": 1,
+      "n_reachable": 0
+    },
+    {
+      "entity": "S1-998400435",
+      "loss": 1.0,
+      "n_truth": 0,
+      "n_pred": 1,
+      "n_reachable": 0
+    },
+    {
+      "entity": "S1-998336314",
+      "loss": 1.0,
+      "n_truth": 0,
+      "n_pred": 1,
+      "n_reachable": 0
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "split": "train",
+  "config_hash": "7353aff5b0eb",
+  "k_per_source": 25,
+  "sample_n": 150000,
+  "queries": 149999,
+  "country_status": {
+    "ok": 149999
+  },
+  "sources": {
+    "S2": {
+      "pool_records": 5034616,
+      "shards": 2,
+      "seconds": 305.7
+    },
+    "S3": {
+      "pool_records": 5285603,
+      "shards": 2,
+      "seconds": 346.3
+    }
+  },
+  "merge_seconds": 5.0,
+  "merged_shards": 2,
+  "total_seconds": 662.6
+}

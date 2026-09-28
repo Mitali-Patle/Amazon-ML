@@ -1,0 +1,179 @@
+{
+  "train_pairs": 7499950,
+  "positives": 490377,
+  "n_features": 40,
+  "gbdt_iterations": 1000,
+  "calibration_bins": [
+    [
+      0.05,
+      10603262,
+      0.0007,
+      0.0006
+    ],
+    [
+      0.15,
+      22067,
+      0.1501,
+      0.1297
+    ],
+    [
+      0.25,
+      21962,
+      0.2262,
+      0.1941
+    ],
+    [
+      0.35,
+      12538,
+      0.3311,
+      0.2894
+    ],
+    [
+      0.45,
+      17635,
+      0.44,
+      0.3758
+    ],
+    [
+      0.55,
+      9559,
+      0.564,
+      0.5048
+    ],
+    [
+      0.65,
+      10087,
+      0.648,
+      0.6123
+    ],
+    [
+      0.75,
+      10122,
+      0.7596,
+      0.732
+    ],
+    [
+      0.85,
+      17746,
+      0.8744,
+      0.8676
+    ],
+    [
+      0.95,
+      309122,
+      0.9934,
+      0.9926
+    ]
+  ],
+  "results": {
+    "with_deconflict": {
+      "decision": {
+        "entities": 110341,
+        "predicted_pairs_before_deconflict": 338028,
+        "predicted_pairs_after_deconflict": 337732,
+        "removed_by_deconflict": 296,
+        "predicted_empty": 5854,
+        "mean_predictions": 3.061,
+        "k_histogram": {
+          "0": 5822,
+          "1": 11725,
+          "2": 24132,
+          "3": 27672,
+          "4": 21136,
+          "5": 11971,
+          "6": 5415,
+          "7": 1799,
+          "8": 524,
+          "9": 119,
+          "10": 16,
+          "11": 5,
+          "12": 2,
+          "13": 3
+        }
+      },
+      "score": {
+        "macro_f05": 0.931436,
+        "entities": 110341,
+        "singletons": 6143,
+        "singletons_correct": 4964,
+        "singleton_accuracy": 0.8081,
+        "singleton_score_share": 0.0557,
+        "empty_predictions": 5854,
+        "pair_tp": 329560,
+        "pair_fp": 8172,
+        "pair_fn": 52535,
+        "micro_precision": 0.975803,
+        "micro_recall": 0.862508,
+        "micro_f05": 0.950824,
+        "perfect_entities": 66416,
+        "zero_entities": 2299,
+        "by_group": {
+          "India": {
+            "n": 44159,
+            "macro_f05": 0.910922
+          },
+          "US": {
+            "n": 66182,
+            "macro_f05": 0.945124
+          }
+        }
+      }
+    },
+    "no_deconflict": {
+      "decision": {
+        "entities": 110341,
+        "predicted_pairs_before_deconflict": 338028,
+        "predicted_pairs_after_deconflict": 338028,
+        "removed_by_deconflict": 0,
+        "predicted_empty": 5822,
+        "mean_predictions": 3.063,
+        "k_histogram": {
+          "0": 5822,
+          "1": 11725,
+          "2": 24132,
+          "3": 27672,
+          "4": 21136,
+          "5": 11971,
+          "6": 5415,
+          "7": 1799,
+          "8": 524,
+          "9": 119,
+          "10": 16,
+          "11": 5,
+          "12": 2,
+          "13": 3
+        }
+      },
+      "score": {
+        "macro_f05": 0.930938,
+        "entities": 110341,
+        "singletons": 6143,
+        "singletons_correct": 4944,
+        "singleton_accuracy": 0.8048,
+        "singleton_score_share": 0.0557,
+        "empty_predictions": 5822,
+        "pair_tp": 329590,
+        "pair_fp": 8438,
+        "pair_fn": 52505,
+        "micro_precision": 0.975038,
+        "micro_recall": 0.862587,
+        "micro_f05": 0.950261,
+        "perfect_entities": 66317,
+        "zero_entities": 2317,
+        "by_group": {
+          "India": {
+            "n": 44159,
+            "macro_f05": 0.910095
+          },
+          "US": {
+            "n": 66182,
+            "macro_f05": 0.944846
+          }
+        }
+      }
+    }
+  },
+  "best_config": "with_deconflict",
+  "val_macro_f05": 0.931436,
+  "total_seconds": 322.5
+}

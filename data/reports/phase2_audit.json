@@ -1,0 +1,58 @@
+{
+  "invariants": {
+    "INV-1": {
+      "ok": true,
+      "detail": "GT<->S1 id sets identical | only_in_s1=0 only_in_gt=0"
+    },
+    "INV-2": {
+      "ok": true,
+      "detail": "all matched ids resolve | dangling=0 s1_self_matches=0"
+    },
+    "INV-3": {
+      "ok": true,
+      "detail": "many-to-one | total=7,638,365 unique=7,638,365 expected=7,638,365"
+    },
+    "INV-4": {
+      "ok": true,
+      "detail": "country agreement over 7,638,365 pairs | disagree=0 unresolved=0"
+    },
+    "INV-5": {
+      "ok": true,
+      "detail": "S1 exact duplicates on (name,address,country) = 0"
+    }
+  },
+  "stats": {
+    "s1_entities": 2206821,
+    "singletons": 123247,
+    "singleton_pct": 5.58,
+    "total_pairs": 7638365,
+    "mean_matches_per_entity": 3.461,
+    "max_matches": 11,
+    "match_count_distribution": {
+      "0": 123247,
+      "1": 119157,
+      "2": 375212,
+      "3": 530841,
+      "4": 484115,
+      "5": 321957,
+      "6": 164868,
+      "7": 63968,
+      "8": 18680,
+      "9": 4205,
+      "10": 534,
+      "11": 37
+    },
+    "pairs_by_source": {
+      "S2": 3693619,
+      "S3": 3944746
+    },
+    "country_crosstab": {
+      "India->India": 3059843,
+      "US->US": 4578522
+    },
+    "unmatched_pool_records": 2681854
+  },
+  "failed": [],
+  "ok": true,
+  "critical_failed": []
+}

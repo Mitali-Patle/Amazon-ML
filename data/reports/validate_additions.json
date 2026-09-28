@@ -1,0 +1,49 @@
+{
+  "base_macro_f05": 0.96579,
+  "base_ids": 359269,
+  "rows": [
+    {
+      "threshold": 0.9,
+      "additions": 0,
+      "precision": null,
+      "macro_f05": 0.96579,
+      "delta": 0.0
+    },
+    {
+      "threshold": 0.95,
+      "additions": 0,
+      "precision": null,
+      "macro_f05": 0.96579,
+      "delta": 0.0
+    },
+    {
+      "threshold": 0.97,
+      "additions": 0,
+      "precision": null,
+      "macro_f05": 0.96579,
+      "delta": 0.0
+    },
+    {
+      "threshold": 0.99,
+      "additions": 0,
+      "precision": null,
+      "macro_f05": 0.96579,
+      "delta": 0.0
+    },
+    {
+      "threshold": 0.995,
+      "additions": 0,
+      "precision": null,
+      "macro_f05": 0.96579,
+      "delta": 0.0
+    }
+  ],
+  "best": {
+    "threshold": 0.9,
+    "additions": 0,
+    "precision": null,
+    "macro_f05": 0.96579,
+    "delta": 0.0
+  },
+  "verdict": "DO NOT ADD"
+}
