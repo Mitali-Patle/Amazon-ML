@@ -1,0 +1,25 @@
+{
+  "ids": 5711510,
+  "mean_predictions": 3.297,
+  "empty_pct": 5.76,
+  "closer_to_truth": true,
+  "k_histogram": {
+    "0": 96515,
+    "1": 123217,
+    "2": 317595,
+    "3": 421953,
+    "4": 364888,
+    "5": 232688,
+    "6": 112972,
+    "7": 43036,
+    "8": 13126,
+    "9": 3589
+  },
+  "matching_file": {
+    "path": "/home/kundhave/Amazon-ML/output/matching_results.tsv",
+    "rows": 1732544,
+    "empty_lists": 99772,
+    "mb": 91.6
+  },
+  "validator_passed": true
+}

@@ -1,0 +1,116 @@
+{
+  "files": {
+    "train_source1": {
+      "rows": 2206821,
+      "name_script": {
+        "latin": 2206821
+      },
+      "addr_script": {
+        "latin": 2206821
+      },
+      "translit_names": 0,
+      "empty_addr_tokens": 0,
+      "empty_name_tokens": 0,
+      "seconds": 19.5,
+      "mb": 255.3,
+      "row_check": true
+    },
+    "train_source2": {
+      "rows": 5034616,
+      "name_script": {
+        "deva": 258863,
+        "latin": 4560271,
+        "indic-other": 196896,
+        "mixed": 18586
+      },
+      "addr_script": {
+        "latin": 4557095,
+        "mixed": 477521
+      },
+      "translit_names": 474345,
+      "empty_addr_tokens": 168967,
+      "empty_name_tokens": 0,
+      "seconds": 49.3,
+      "mb": 653.8,
+      "row_check": true
+    },
+    "train_source3": {
+      "rows": 5285603,
+      "name_script": {
+        "latin": 5007079,
+        "mixed": 34894,
+        "indic-other": 105443,
+        "deva": 138187
+      },
+      "addr_script": {
+        "latin": 4809825,
+        "mixed": 475691,
+        "indic-other": 41,
+        "deva": 46
+      },
+      "translit_names": 278524,
+      "empty_addr_tokens": 175916,
+      "empty_name_tokens": 0,
+      "seconds": 48.5,
+      "mb": 669.3,
+      "row_check": true
+    },
+    "test_source1": {
+      "rows": 1732544,
+      "name_script": {
+        "latin": 1732544
+      },
+      "addr_script": {
+        "latin": 1732544
+      },
+      "translit_names": 0,
+      "empty_addr_tokens": 0,
+      "empty_name_tokens": 0,
+      "seconds": 15.6,
+      "mb": 205.2,
+      "row_check": true
+    },
+    "test_source2": {
+      "rows": 4887273,
+      "name_script": {
+        "latin": 4340667,
+        "indic-other": 228446,
+        "mixed": 20556,
+        "deva": 297604
+      },
+      "addr_script": {
+        "latin": 4336700,
+        "mixed": 550573
+      },
+      "translit_names": 546606,
+      "empty_addr_tokens": 129408,
+      "empty_name_tokens": 0,
+      "seconds": 50.7,
+      "mb": 656.2,
+      "row_check": true
+    },
+    "test_source3": {
+      "rows": 5082316,
+      "name_script": {
+        "deva": 158605,
+        "latin": 4761677,
+        "indic-other": 122174,
+        "mixed": 39860
+      },
+      "addr_script": {
+        "latin": 4531833,
+        "mixed": 550384,
+        "deva": 57,
+        "indic-other": 42
+      },
+      "translit_names": 320639,
+      "empty_addr_tokens": 136098,
+      "empty_name_tokens": 0,
+      "seconds": 50.7,
+      "mb": 658.0,
+      "row_check": true
+    }
+  },
+  "errors": [],
+  "ok": true
+}

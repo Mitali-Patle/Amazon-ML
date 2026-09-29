@@ -1,0 +1,256 @@
+{
+  "config_hash": "7353aff5b0eb",
+  "addr_weight": 0.7,
+  "top_k": 50,
+  "pool_mode": "full",
+  "query_limit": null,
+  "k_grid": [
+    10,
+    25,
+    50,
+    100,
+    200
+  ],
+  "by_country": {
+    "India": {
+      "true_pairs": 152797,
+      "queries": 41712,
+      "mean_candidates": 200.0,
+      "pair_recall": {
+        "@10": 86.22,
+        "@25": 89.34,
+        "@50": 90.89,
+        "@100": 92.15,
+        "@200": 93.52
+      },
+      "entity_recall": {
+        "@10": 86.26,
+        "@25": 89.25,
+        "@50": 90.78,
+        "@100": 92.01,
+        "@200": 93.4
+      },
+      "by_script": {
+        "@10": {
+          "deva": 70.01,
+          "indic-other": 69.89,
+          "latin": 89.59,
+          "mixed": 82.77
+        },
+        "@25": {
+          "deva": 74.34,
+          "indic-other": 74.68,
+          "latin": 92.42,
+          "mixed": 85.96
+        },
+        "@50": {
+          "deva": 76.45,
+          "indic-other": 77.37,
+          "latin": 93.79,
+          "mixed": 88.09
+        },
+        "@100": {
+          "deva": 78.14,
+          "indic-other": 79.22,
+          "latin": 94.96,
+          "mixed": 89.01
+        },
+        "@200": {
+          "deva": 80.31,
+          "indic-other": 81.78,
+          "latin": 96.12,
+          "mixed": 91.38
+        }
+      },
+      "script_pair_counts": {
+        "latin": 125226,
+        "indic-other": 11018,
+        "mixed": 2066,
+        "deva": 14487
+      },
+      "pool_records": 4133346,
+      "query_entities": 44159,
+      "vocab": {
+        "pool_records": 4133346,
+        "distinct_keys": 964310,
+        "indexed_keys": 964165,
+        "dropped_stopword_keys": 145,
+        "df_stopword_threshold": 60000,
+        "top_dropped": [
+          [
+            "addr:no",
+            1827202
+          ],
+          [
+            "name:limited",
+            1680661
+          ],
+          [
+            "name:private",
+            1166521
+          ],
+          [
+            "addr:road",
+            767228
+          ],
+          [
+            "name:ltd",
+            648418
+          ],
+          [
+            "addr:floor",
+            584256
+          ],
+          [
+            "addr:nagar",
+            554778
+          ],
+          [
+            "addr:delhi",
+            534840
+          ],
+          [
+            "addr:c",
+            472523
+          ],
+          [
+            "addr:a",
+            422711
+          ]
+        ]
+      },
+      "pair_space_full": 182524426014,
+      "pair_space_topk": 2207950,
+      "reduction_ratio": 82666.9,
+      "seconds": {
+        "vocab": 31.3,
+        "matrix": 23.2,
+        "retrieval": 186.8
+      },
+      "nnz": {
+        "pool": 34183182,
+        "query": 361133
+      }
+    },
+    "US": {
+      "true_pairs": 229298,
+      "queries": 62486,
+      "mean_candidates": 200.0,
+      "pair_recall": {
+        "@10": 93.47,
+        "@25": 95.72,
+        "@50": 96.67,
+        "@100": 97.29,
+        "@200": 97.93
+      },
+      "entity_recall": {
+        "@10": 93.63,
+        "@25": 95.77,
+        "@50": 96.69,
+        "@100": 97.31,
+        "@200": 97.94
+      },
+      "by_script": {
+        "@10": {
+          "latin": 93.47
+        },
+        "@25": {
+          "latin": 95.72
+        },
+        "@50": {
+          "latin": 96.67
+        },
+        "@100": {
+          "latin": 97.29
+        },
+        "@200": {
+          "latin": 97.93
+        }
+      },
+      "script_pair_counts": {
+        "latin": 229298
+      },
+      "pool_records": 6186873,
+      "query_entities": 66182,
+      "vocab": {
+        "pool_records": 6186873,
+        "distinct_keys": 1336374,
+        "indexed_keys": 1336264,
+        "dropped_stopword_keys": 110,
+        "df_stopword_threshold": 60000,
+        "top_dropped": [
+          [
+            "name:llc",
+            1099621
+          ],
+          [
+            "name:inc",
+            820140
+          ],
+          [
+            "addr:st",
+            639328
+          ],
+          [
+            "addr:rd",
+            599717
+          ],
+          [
+            "addr:street",
+            565999
+          ],
+          [
+            "addr:dr",
+            544979
+          ],
+          [
+            "addr:road",
+            521188
+          ],
+          [
+            "addr:drive",
+            455278
+          ],
+          [
+            "addr:ave",
+            447822
+          ],
+          [
+            "addr:city",
+            415912
+          ]
+        ]
+      },
+      "pair_space_full": 409459628886,
+      "pair_space_topk": 3309100,
+      "reduction_ratio": 123737.5,
+      "seconds": {
+        "vocab": 38.0,
+        "matrix": 27.6,
+        "retrieval": 249.1
+      },
+      "nnz": {
+        "pool": 37074849,
+        "query": 414220
+      }
+    }
+  },
+  "aggregate": {
+    "true_pairs": 382095,
+    "pair_recall": {
+      "@10": 90.57,
+      "@25": 93.17,
+      "@50": 94.36,
+      "@100": 95.23,
+      "@200": 96.17
+    },
+    "entity_recall": {
+      "@10": 90.68,
+      "@25": 93.16,
+      "@50": 94.32,
+      "@100": 95.19,
+      "@200": 96.12
+    }
+  },
+  "total_seconds": 565.4
+}

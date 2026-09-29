@@ -1,0 +1,115 @@
+{
+  "candidates_file": "val_candidate_pairs_per_source_50.tsv",
+  "entities": 110341,
+  "true_pairs": 382095,
+  "singletons": 6143,
+  "oracle": {
+    "macro_f05": 0.983255,
+    "entities": 110341,
+    "singletons": 6143,
+    "singletons_correct": 6143,
+    "singleton_accuracy": 1.0,
+    "singleton_score_share": 0.0557,
+    "empty_predictions": 6706,
+    "pair_tp": 364481,
+    "pair_fp": 0,
+    "pair_fn": 17614,
+    "micro_precision": 1.0,
+    "micro_recall": 0.953902,
+    "micro_f05": 0.990427,
+    "perfect_entities": 96304,
+    "zero_entities": 563,
+    "by_group": {
+      "India": {
+        "n": 44159,
+        "macro_f05": 0.970676
+      },
+      "US": {
+        "n": 66182,
+        "macro_f05": 0.991649
+      }
+    }
+  },
+  "predict_all": {
+    "macro_f05": 0.040852,
+    "entities": 110341,
+    "singletons": 6143,
+    "singletons_correct": 0,
+    "singleton_accuracy": 0.0,
+    "singleton_score_share": 0.0557,
+    "empty_predictions": 0,
+    "pair_tp": 364481,
+    "pair_fp": 10669619,
+    "pair_fn": 17614,
+    "micro_precision": 0.033032,
+    "micro_recall": 0.953902,
+    "micro_f05": 0.040936,
+    "perfect_entities": 0,
+    "zero_entities": 6706,
+    "by_group": {
+      "India": {
+        "n": 44159,
+        "macro_f05": 0.039559
+      },
+      "US": {
+        "n": 66182,
+        "macro_f05": 0.041714
+      }
+    }
+  },
+  "predict_nothing": {
+    "macro_f05": 0.055673,
+    "entities": 110341,
+    "singletons": 6143,
+    "singletons_correct": 6143,
+    "singleton_accuracy": 1.0,
+    "singleton_score_share": 0.0557,
+    "empty_predictions": 110341,
+    "pair_tp": 0,
+    "pair_fp": 0,
+    "pair_fn": 382095,
+    "micro_precision": 0.0,
+    "micro_recall": 0.0,
+    "micro_f05": 0.0,
+    "perfect_entities": 6143,
+    "zero_entities": 104198,
+    "by_group": {
+      "India": {
+        "n": 44159,
+        "macro_f05": 0.055413
+      },
+      "US": {
+        "n": 66182,
+        "macro_f05": 0.055846
+      }
+    }
+  },
+  "oracle_no_singleton_detection": {
+    "macro_f05": 0.927583,
+    "entities": 110341,
+    "singletons": 6143,
+    "singletons_correct": 0,
+    "singleton_accuracy": 0.0,
+    "singleton_score_share": 0.0557,
+    "empty_predictions": 0,
+    "pair_tp": 364481,
+    "pair_fp": 6706,
+    "pair_fn": 17614,
+    "micro_precision": 0.981934,
+    "micro_recall": 0.953902,
+    "micro_f05": 0.976196,
+    "perfect_entities": 90161,
+    "zero_entities": 6706,
+    "by_group": {
+      "India": {
+        "n": 44159,
+        "macro_f05": 0.915263
+      },
+      "US": {
+        "n": 66182,
+        "macro_f05": 0.935803
+      }
+    }
+  },
+  "pair_recall_of_candidates": 95.39
+}

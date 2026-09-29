@@ -1,0 +1,10 @@
+{
+  "add_min": 0.97,
+  "their_base_ids": 5760884,
+  "added_ids": 44385,
+  "skipped_claimed": 5295697,
+  "total_ids": 5805269,
+  "mean_predictions": 3.351,
+  "empty_predictions": 101276,
+  "empty_pct": 5.85
+}

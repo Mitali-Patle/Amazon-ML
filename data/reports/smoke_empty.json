@@ -1,0 +1,29 @@
+{
+  "split": "test",
+  "tag": "smoke_empty",
+  "preflight": {
+    "entities": 1732544,
+    "predicted_ids": 0,
+    "mean_predictions": 0.0,
+    "empty_predictions": 1732544,
+    "contested_ids": 0,
+    "rows_not_subset_of_candidates": 0,
+    "problems": [],
+    "ok": true
+  },
+  "matching_file": {
+    "path": "/home/kundhave/Amazon-ML/output/matching_results.tsv",
+    "rows": 1732544,
+    "empty_lists": 1732544,
+    "mb": 22.95
+  },
+  "validator": {
+    "ran": true,
+    "exit_code": 0,
+    "passed": true,
+    "stdout": "ML Challenge 2026 \u2014 submission validator\n  test dir: /home/kundhave/Amazon-ML/6ab10eb3b23ba_student_resource/student_resource/dataset/test\n  required S1 entities: 1732544\n  matching_results.tsv: 1732544 rows (1732544 empty, 0 non-empty).\n\nWARNING: ID-existence check is OFF (the default) \u2014 not checking that matched/candidate IDs exist in the test set. Every other rule is still checked. Re-run with --check-ids to enable it (needs test_source2/3.tsv; uses more memory). A nonexistent ID only lowers your score, never rejects your submission.\nWARNING: output/candidate_pairs.tsv not found \u2014 skipping candidate_pairs.tsv checks. It is optional here, but your final submission zip must include output/candidate_pairs.tsv.\nPASS \u2014 no blocking issues found. Safe to submit.\n",
+    "stderr": "",
+    "command": "/home/kundhave/Amazon-ML/.venv/bin/python /home/kundhave/Amazon-ML/6ab10eb3b23ba_student_resource/student_resource/utils/validate_submission.py --matching /home/kundhave/Amazon-ML/output/matching_results.tsv --test-dir /home/kundhave/Amazon-ML/6ab10eb3b23ba_student_resource/student_resource/dataset/test"
+  },
+  "ok": true
+}

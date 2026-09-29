@@ -1,0 +1,346 @@
+{
+  "per_file": {
+    "train_source1": {
+      "n_distinct": 2,
+      "values": {
+        "'US'": 1323633,
+        "'India'": 883188
+      },
+      "empty_or_whitespace": 0,
+      "details": {
+        "'US'": {
+          "repr": "'US'",
+          "len": 2,
+          "has_leading_ws": false,
+          "has_trailing_ws": false,
+          "casefold": "us",
+          "stripped_casefold": "us",
+          "codepoints": [
+            "0x55",
+            "0x53"
+          ],
+          "nfkc_differs": false
+        },
+        "'India'": {
+          "repr": "'India'",
+          "len": 5,
+          "has_leading_ws": false,
+          "has_trailing_ws": false,
+          "casefold": "india",
+          "stripped_casefold": "india",
+          "codepoints": [
+            "0x49",
+            "0x6e",
+            "0x64",
+            "0x69",
+            "0x61"
+          ],
+          "nfkc_differs": false
+        }
+      }
+    },
+    "train_source2": {
+      "n_distinct": 2,
+      "values": {
+        "'US'": 3016817,
+        "'India'": 2017799
+      },
+      "empty_or_whitespace": 0,
+      "details": {
+        "'India'": {
+          "repr": "'India'",
+          "len": 5,
+          "has_leading_ws": false,
+          "has_trailing_ws": false,
+          "casefold": "india",
+          "stripped_casefold": "india",
+          "codepoints": [
+            "0x49",
+            "0x6e",
+            "0x64",
+            "0x69",
+            "0x61"
+          ],
+          "nfkc_differs": false
+        },
+        "'US'": {
+          "repr": "'US'",
+          "len": 2,
+          "has_leading_ws": false,
+          "has_trailing_ws": false,
+          "casefold": "us",
+          "stripped_casefold": "us",
+          "codepoints": [
+            "0x55",
+            "0x53"
+          ],
+          "nfkc_differs": false
+        }
+      }
+    },
+    "train_source3": {
+      "n_distinct": 2,
+      "values": {
+        "'US'": 3170056,
+        "'India'": 2115547
+      },
+      "empty_or_whitespace": 0,
+      "details": {
+        "'US'": {
+          "repr": "'US'",
+          "len": 2,
+          "has_leading_ws": false,
+          "has_trailing_ws": false,
+          "casefold": "us",
+          "stripped_casefold": "us",
+          "codepoints": [
+            "0x55",
+            "0x53"
+          ],
+          "nfkc_differs": false
+        },
+        "'India'": {
+          "repr": "'India'",
+          "len": 5,
+          "has_leading_ws": false,
+          "has_trailing_ws": false,
+          "casefold": "india",
+          "stripped_casefold": "india",
+          "codepoints": [
+            "0x49",
+            "0x6e",
+            "0x64",
+            "0x69",
+            "0x61"
+          ],
+          "nfkc_differs": false
+        }
+      }
+    },
+    "test_source1": {
+      "n_distinct": 3,
+      "values": {
+        "'India'": 809986,
+        "'US'": 663106,
+        "'France'": 259452
+      },
+      "empty_or_whitespace": 0,
+      "details": {
+        "'US'": {
+          "repr": "'US'",
+          "len": 2,
+          "has_leading_ws": false,
+          "has_trailing_ws": false,
+          "casefold": "us",
+          "stripped_casefold": "us",
+          "codepoints": [
+            "0x55",
+            "0x53"
+          ],
+          "nfkc_differs": false
+        },
+        "'France'": {
+          "repr": "'France'",
+          "len": 6,
+          "has_leading_ws": false,
+          "has_trailing_ws": false,
+          "casefold": "france",
+          "stripped_casefold": "france",
+          "codepoints": [
+            "0x46",
+            "0x72",
+            "0x61",
+            "0x6e",
+            "0x63",
+            "0x65"
+          ],
+          "nfkc_differs": false
+        },
+        "'India'": {
+          "repr": "'India'",
+          "len": 5,
+          "has_leading_ws": false,
+          "has_trailing_ws": false,
+          "casefold": "india",
+          "stripped_casefold": "india",
+          "codepoints": [
+            "0x49",
+            "0x6e",
+            "0x64",
+            "0x69",
+            "0x61"
+          ],
+          "nfkc_differs": false
+        }
+      }
+    },
+    "test_source2": {
+      "n_distinct": 3,
+      "values": {
+        "'India'": 2312565,
+        "'US'": 1871330,
+        "'France'": 703378
+      },
+      "empty_or_whitespace": 0,
+      "details": {
+        "'India'": {
+          "repr": "'India'",
+          "len": 5,
+          "has_leading_ws": false,
+          "has_trailing_ws": false,
+          "casefold": "india",
+          "stripped_casefold": "india",
+          "codepoints": [
+            "0x49",
+            "0x6e",
+            "0x64",
+            "0x69",
+            "0x61"
+          ],
+          "nfkc_differs": false
+        },
+        "'France'": {
+          "repr": "'France'",
+          "len": 6,
+          "has_leading_ws": false,
+          "has_trailing_ws": false,
+          "casefold": "france",
+          "stripped_casefold": "france",
+          "codepoints": [
+            "0x46",
+            "0x72",
+            "0x61",
+            "0x6e",
+            "0x63",
+            "0x65"
+          ],
+          "nfkc_differs": false
+        },
+        "'US'": {
+          "repr": "'US'",
+          "len": 2,
+          "has_leading_ws": false,
+          "has_trailing_ws": false,
+          "casefold": "us",
+          "stripped_casefold": "us",
+          "codepoints": [
+            "0x55",
+            "0x53"
+          ],
+          "nfkc_differs": false
+        }
+      }
+    },
+    "test_source3": {
+      "n_distinct": 3,
+      "values": {
+        "'India'": 2405000,
+        "'US'": 1945701,
+        "'France'": 731615
+      },
+      "empty_or_whitespace": 0,
+      "details": {
+        "'India'": {
+          "repr": "'India'",
+          "len": 5,
+          "has_leading_ws": false,
+          "has_trailing_ws": false,
+          "casefold": "india",
+          "stripped_casefold": "india",
+          "codepoints": [
+            "0x49",
+            "0x6e",
+            "0x64",
+            "0x69",
+            "0x61"
+          ],
+          "nfkc_differs": false
+        },
+        "'France'": {
+          "repr": "'France'",
+          "len": 6,
+          "has_leading_ws": false,
+          "has_trailing_ws": false,
+          "casefold": "france",
+          "stripped_casefold": "france",
+          "codepoints": [
+            "0x46",
+            "0x72",
+            "0x61",
+            "0x6e",
+            "0x63",
+            "0x65"
+          ],
+          "nfkc_differs": false
+        },
+        "'US'": {
+          "repr": "'US'",
+          "len": 2,
+          "has_leading_ws": false,
+          "has_trailing_ws": false,
+          "casefold": "us",
+          "stripped_casefold": "us",
+          "codepoints": [
+            "0x55",
+            "0x53"
+          ],
+          "nfkc_differs": false
+        }
+      }
+    }
+  },
+  "variant_analysis": {
+    "distinct_raw_values": [
+      "'France'",
+      "'India'",
+      "'US'"
+    ],
+    "collapse_under_strip_casefold": {},
+    "any_variants": false,
+    "any_whitespace_issues": false,
+    "any_empty": false,
+    "any_nfkc_differs": false
+  },
+  "coverage": {
+    "train": {
+      "India": {
+        "S1": 883188,
+        "S2": 2017799,
+        "S3": 2115547
+      },
+      "US": {
+        "S1": 1323633,
+        "S2": 3016817,
+        "S3": 3170056
+      }
+    },
+    "test": {
+      "France": {
+        "S1": 259452,
+        "S2": 703378,
+        "S3": 731615
+      },
+      "India": {
+        "S1": 809986,
+        "S2": 2312565,
+        "S3": 2405000
+      },
+      "US": {
+        "S1": 663106,
+        "S2": 1871330,
+        "S3": 1945701
+      }
+    }
+  },
+  "risks": [],
+  "unseen_in_test": [
+    "France"
+  ],
+  "absent_from_test": [],
+  "hard_block_cost_train": {
+    "pairs": 7638365,
+    "cross_country_pairs": 0,
+    "recall_lost_pct": 0.0,
+    "upper_bound_95pct_if_zero": 3.9e-05
+  }
+}

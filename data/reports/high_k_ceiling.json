@@ -1,0 +1,40 @@
+{
+  "grid": [
+    {
+      "k_per_source": 25,
+      "pair_recall": 94.464,
+      "oracle_macro_f05": 0.9799,
+      "mean_candidates": 50.0,
+      "test_pairs_projected_M": 86.6
+    },
+    {
+      "k_per_source": 50,
+      "pair_recall": 95.387,
+      "oracle_macro_f05": 0.9832,
+      "mean_candidates": 100.0,
+      "test_pairs_projected_M": 173.3
+    },
+    {
+      "k_per_source": 100,
+      "pair_recall": 96.263,
+      "oracle_macro_f05": 0.9865,
+      "mean_candidates": 200.0,
+      "test_pairs_projected_M": 346.5
+    },
+    {
+      "k_per_source": 150,
+      "pair_recall": 96.779,
+      "oracle_macro_f05": 0.9884,
+      "mean_candidates": 300.0,
+      "test_pairs_projected_M": 519.8
+    },
+    {
+      "k_per_source": 200,
+      "pair_recall": 97.1,
+      "oracle_macro_f05": 0.9897,
+      "mean_candidates": 400.0,
+      "test_pairs_projected_M": 693.0
+    }
+  ],
+  "seconds": 581.7
+}

@@ -1,0 +1,25 @@
+{
+  "split": "test",
+  "config_hash": "7353aff5b0eb",
+  "k_per_source": 150,
+  "sample_n": null,
+  "queries": 1732544,
+  "country_status": {
+    "ok": 1732544
+  },
+  "sources": {
+    "S2": {
+      "pool_records": 4887273,
+      "shards": 18,
+      "seconds": 3114.1
+    },
+    "S3": {
+      "pool_records": 5082316,
+      "shards": 18,
+      "seconds": 3283.1
+    }
+  },
+  "merge_seconds": 355.8,
+  "merged_shards": 18,
+  "total_seconds": 6758.0
+}

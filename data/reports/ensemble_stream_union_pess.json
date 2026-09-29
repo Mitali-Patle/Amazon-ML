@@ -1,0 +1,19 @@
+{
+  "policy": "union_pess",
+  "w": 0.5,
+  "provenance": {
+    "both": 5939365,
+    "ours_only": 17408675,
+    "theirs_only": 216704
+  },
+  "mean_predictions": 3.21,
+  "empty_predictions": 95564,
+  "empty_pct": 5.52,
+  "matching_file": {
+    "path": "/home/kundhave/Amazon-ML/output/matching_results.tsv",
+    "rows": 1732544,
+    "empty_lists": 95564,
+    "mb": 89.76
+  },
+  "validator_passed": true
+}

@@ -1,0 +1,17 @@
+{
+  "add_min": 0.99,
+  "their_base_ids": 5689603,
+  "added_ids": 40923,
+  "skipped_claimed": 5269408,
+  "total_ids": 5730526,
+  "mean_predictions": 3.308,
+  "empty_predictions": 102742,
+  "empty_pct": 5.93,
+  "matching_file": {
+    "path": "/home/kundhave/Amazon-ML/output/matching_results.tsv",
+    "rows": 1732544,
+    "empty_lists": 102742,
+    "mb": 91.83
+  },
+  "validator_passed": true
+}
